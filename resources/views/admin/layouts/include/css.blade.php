@@ -15,3 +15,27 @@
 <link href=" {{ asset('assets/src/assets/css/light/dashboard/dash_1.css') }} " rel="stylesheet" type="text/css" />
 <link href=" {{ asset('assets/src/assets/css/dark/dashboard/dash_1.css') }}" rel="stylesheet" type="text/css" />
 <!-- END PAGE LEVEL PLUGINS/CUSTOM STYLES -->
+
+
+<link rel="stylesheet" type="text/css" href="{{ asset('assets/src/plugins/src/table/datatable/datatables.css') }}">
+
+<link rel="stylesheet" type="text/css" href="{{ asset('assets/src/plugins/src/table/datatable/css/light/dt-global_style.css') }}">
+<link rel="stylesheet" type="text/css" href="{{ asset('assets/src/plugins/src/table/datatable/css/light/custom_dt_miscellaneous.css') }}">
+
+<link rel="stylesheet" type="text/css" href="{{ asset('assets/src/plugins/src/table/datatable/css/dark/dt-global_style.css') }}">
+<link rel="stylesheet" type="text/css" href="{{ asset('assets/src/plugins/src/table/datatable/css/dark/custom_dt_miscellaneous.css') }}">
+
+<!--light -->
+<link rel="stylesheet" type="text/css" href="{{ asset('assets/src/assets/css/timeline/light/scrollspyNav.css') }}"  >
+<link rel="stylesheet" type="text/css" href="{{ asset('assets/src/assets/css/timeline/light/timeline.css') }}"  >
+
+<!--Dark -->
+<link rel="stylesheet" type="text/css" href="{{ asset('assets/src/assets/css/timeline/dark/scrollspyNav.css') }}"  >
+<link rel="stylesheet" type="text/css" href="{{ asset('assets/src/assets/css/timeline/dark/timeline.css') }}"  >
+
+<!-- Timeline -->
+
+<link rel="stylesheet" type="text/css" href="{{ asset('assets/src/assets/css/drag-and-drop/dragula/dragula.css') }}"  >
+
+<link rel="stylesheet" type="text/css" href="{{ asset('assets/src/assets/css/drag-and-drop/dragula/dark/example.css') }}"  >
+<link rel="stylesheet" type="text/css" href="{{ asset('assets/src/assets/css/drag-and-drop/dragula/dark/example.css') }}"  >

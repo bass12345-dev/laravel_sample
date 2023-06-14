@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 class SetlistController extends Controller
 {
     public function index(){
-
-        echo 'hi';
+        $data['title'] = 'Setlist';
+        return view('admin.contents.setlist.setlist')->with($data);
     }
 }

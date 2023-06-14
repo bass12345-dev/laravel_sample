@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 class MemberController extends Controller
 {
     public function index(){
-
-        echo 'hi';
+        $data['title'] = 'Members';
+        return view('admin.contents.members.members')->with($data);
     }
 }

@@ -9,6 +9,7 @@ class SongsController extends Controller
 {
     public function index(){
 
-        echo 'hi';
+        $data['title'] = 'Songs';
+        return view('admin.contents.songs.songs')->with($data);
     }
 }

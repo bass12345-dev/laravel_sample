@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 class SingerController extends Controller
 {
     public function index(){
-
-        echo 'hi';
+        $data['title'] = 'Singers';
+        return view('admin.contents.singers.singers')->with($data);
     }
 }
