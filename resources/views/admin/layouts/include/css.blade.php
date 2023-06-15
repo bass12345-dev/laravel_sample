@@ -39,3 +39,11 @@
 
 <link rel="stylesheet" type="text/css" href="{{ asset('assets/src/assets/css/drag-and-drop/dragula/dark/example.css') }}"  >
 <link rel="stylesheet" type="text/css" href="{{ asset('assets/src/assets/css/drag-and-drop/dragula/dark/example.css') }}"  >
+
+<!-- Contact -->
+<link rel="stylesheet" type="text/css" href="{{ asset('assets/src/plugins/src/contact/light/modal.css') }}"  >
+<link rel="stylesheet" type="text/css" href="{{ asset('assets/src/plugins/src/contact/light/contacts.css') }}"  >
+
+
+<link rel="stylesheet" type="text/css" href="{{ asset('assets/src/plugins/src/contact/dark/modal.css') }}"  >
+<link rel="stylesheet" type="text/css" href="{{ asset('assets/src/plugins/src/contact/dark/contacts.css') }}"  >
