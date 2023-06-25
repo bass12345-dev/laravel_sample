@@ -36,3 +36,6 @@ Route::prefix('user')->group(function  () {
         Route::get('/singers', [App\Http\Controllers\User\SingerController::class, 'index']);
         
 });
+
+
+Route::post('/auth/verify', 'App\Http\Controllers\Auth\LoginController@verify');

@@ -26,6 +26,7 @@
 
     <script src=" {{ asset('assets/src/assets/js/jquery-ui.min.js') }}"></script>
     <script src=" {{ asset('assets\src\plugins\src\contact\contacts.js') }}"></script>
+    
     <script>
           $('#html5-extensio').DataTable({
         "dom": "<'dt--top-section'<'row'<'col-sm-12 col-md-6 d-flex justify-content-md-start justify-content-center'B><'col-sm-12 col-md-6 d-flex justify-content-md-end justify-content-center mt-md-0 mt-3'f>>>" +

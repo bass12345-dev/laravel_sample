@@ -8,6 +8,7 @@
 
 <div class="layout-px-spacing">
     <div class="middle-content container-xxl p-0">
+    
         <!--  BEGIN BREADCRUMBS  -->
         @include('admin.contents.components.title')        
         <!--  END BREADCRUMBS  -->

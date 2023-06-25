@@ -57,14 +57,14 @@
                                 </div>
                                 <div class="col-md-12">
                                     <div class="mb-3">
-                                        <label class="form-label">Email</label>
-                                        <input type="email" class="form-control">
+                                        <label class="form-label">Username</label>
+                                        <input type="text" name="username" id="username" class="form-control">
                                     </div>
                                 </div>
                                 <div class="col-12">
                                     <div class="mb-4">
                                         <label class="form-label">Password</label>
-                                        <input type="text" class="form-control">
+                                        <input type="text" name="password" id="password" class="form-control">
                                     </div>
                                 </div>
                                 <div class="col-12">
@@ -100,13 +100,49 @@
     <!-- BEGIN GLOBAL MANDATORY SCRIPTS -->
     <script src="{{ asset('assets/src/plugins/src/global/vendors.min.js') }}"></script>
     <script src=" {{ asset('assets/src/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+    <script src=" {{ asset('assets/js/overly.js') }}"></script>
     <!-- END GLOBAL MANDATORY SCRIPTS -->
     <script>
     var base_url = '<?php echo url(''); ?>';  
+
+
     $('#login-form').on('submit', function(e) {
         e.preventDefault();
+
+        var username = $('input[name=username]').val();
+        var password = $('input[name=password]').val();
         
-      
+        $.ajax({
+            
+            type: "POST",
+            url: base_url + '/auth/verify',
+            data: {
+             username : username,
+             password : password,
+             _token   : '{{ csrf_token() }}'
+            },
+            dataType: 'json',
+            beforeSend: function() {
+                   
+                JsLoadingOverlay.show({
+                    'overlayBackgroundColor': '#666666',
+                    'overlayOpacity': 0.6,
+                    'spinnerIcon': 'pacman',
+                    'spinnerColor': '#000',
+                    'spinnerSize': '2x',
+                    'overlayIDName': 'overlay',
+                    'spinnerIDName': 'spinner',
+                  }); 
+            },
+            headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+            success: function(data)
+            {            
+
+                console.log(data)
+
+            }
+
+        });
     });
    
     </script>
