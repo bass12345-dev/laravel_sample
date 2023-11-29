@@ -17,7 +17,7 @@ Route::get('/', function () {
     return view('auth.login');
 });
 
-Route::prefix('admin')->group(function  () {
+Route::prefix('user')->group(function  () {
 
         Route::get('/dashboard', [App\Http\Controllers\Admin\DashboardController::class, 'index']);
         Route::get('/songs', [App\Http\Controllers\Admin\SongsController::class, 'index']);
@@ -28,14 +28,39 @@ Route::prefix('admin')->group(function  () {
 });
 
 
-Route::prefix('user')->group(function  () {
 
-        Route::get('/dashboard', [App\Http\Controllers\User\DashboardController::class, 'index']);
-        Route::get('/songs', [App\Http\Controllers\User\SongsController::class, 'index']);
-        Route::get('/setlist', [App\Http\Controllers\User\SetlistController::class, 'index']);
-        Route::get('/singers', [App\Http\Controllers\User\SingerController::class, 'index']);
+
+
+// Route::prefix('user')->group(function  () {
+
+//         Route::get('/dashboard', [App\Http\Controllers\User\DashboardController::class, 'index']);
+//         Route::get('/songs', [App\Http\Controllers\User\SongsController::class, 'index']);
+//         Route::get('/setlist', [App\Http\Controllers\User\SetlistController::class, 'index']);
+//         Route::get('/singers', [App\Http\Controllers\User\SingerController::class, 'index']);
         
-});
+// });
 
 
 Route::post('/auth/verify', 'App\Http\Controllers\Auth\LoginController@verify');
+
+
+                            //Type
+
+
+Route::post('/songs/ap-type', 'App\Http\Controllers\Admin\SongsController@add_song_type');
+Route::get('/songs/get-types', 'App\Http\Controllers\Admin\SongsController@get_types');
+Route::post('/songs/delete-type', 'App\Http\Controllers\Admin\SongsController@delete_type');
+
+
+                            //Songs
+
+
+Route::post('/songs/au-song', 'App\Http\Controllers\Admin\SongsController@add_song');
+Route::get('/songs/get-songs', 'App\Http\Controllers\Admin\SongsController@get_songs');
+Route::post('/songs/delete-songs', 'App\Http\Controllers\Admin\SongsController@delete_song');
+
+                            //Artists
+
+
+Route::get('/songs/get-artists', 'App\Http\Controllers\Admin\ArtistController@get_artists');
+Route::get('/songs/search_artist', 'App\Http\Controllers\Admin\ArtistController@search_artist');

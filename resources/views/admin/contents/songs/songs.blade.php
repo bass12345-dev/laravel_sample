@@ -14,8 +14,18 @@
         <div class="row">
         @include('admin.contents.songs.songs_components.songs_table')
         @include('admin.contents.songs.songs_components.artist_table')
-        </div>        
+        </div> 
+        <div class="row">
+         @include('admin.contents.songs.songs_components.type_table')
+        </div>       
         </div>
-</div>
+
+         @include('admin.contents.songs.modals.add_update_song')
+         @include('admin.contents.songs.modals.add_update_artist')
+         @include('admin.contents.songs.modals.add_update_type')
+    </div>
+
+
+
 
 @endsection

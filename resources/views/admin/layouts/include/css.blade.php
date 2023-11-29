@@ -47,3 +47,6 @@
 
 <link rel="stylesheet" type="text/css" href="{{ asset('assets/src/plugins/src/contact/dark/modal.css') }}"  >
 <link rel="stylesheet" type="text/css" href="{{ asset('assets/src/plugins/src/contact/dark/contacts.css') }}"  >
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/11.10.1/sweetalert2.css" integrity="sha512-pxzljms2XK/DmQU3S58LhGyvttZBPNSw1/zoVZiYmYBvjDQW+0K7/DVzWHNz/LeiDs+uiPMtfQpgDeETwqL+1Q==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-typeahead/2.11.2/jquery.typeahead.css" integrity="sha512-zPDjm5fHC6JUi5jEnhJetvp1zLvc1Dd5TuMFQQtqRH0KpOzrng4vHiFu2Eva+Xgu7umz0lqGHkmGjUYdeSW54w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
