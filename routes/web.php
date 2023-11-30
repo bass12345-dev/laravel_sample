@@ -69,3 +69,4 @@ Route::post('/songs/delete-artist', 'App\Http\Controllers\Admin\ArtistController
 
                             //Members
 Route::get('/get-members', 'App\Http\Controllers\Admin\MemberController@get_members');
+Route::get('/get-singer-members', 'App\Http\Controllers\Admin\MemberController@get_singer_members');

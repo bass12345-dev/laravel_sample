@@ -40,4 +40,24 @@ class MemberController extends Controller
 
         return response()->json($data);
     }
+
+
+    public function get_singer_members(){
+
+        $items = DB::table('members')->where('type','member')->where('position','singer')->orderBy('full_name', 'asc')->get();
+        $data = [];
+        foreach ($items as $row) {
+
+            $data[] = array(
+
+                    'full_name'        => $row->full_name,
+                    'member_id'        => $row->member_id,
+                    'position'         => $row->position
+
+            );
+        }
+
+
+        return response()->json($data);
+    }
 }
