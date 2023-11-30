@@ -61,6 +61,11 @@ Route::post('/songs/delete-songs', 'App\Http\Controllers\Admin\SongsController@d
 
                             //Artists
 
-
+Route::post('/songs/ap-artist', 'App\Http\Controllers\Admin\ArtistController@add_artist');
 Route::get('/songs/get-artists', 'App\Http\Controllers\Admin\ArtistController@get_artists');
 Route::get('/songs/search_artist', 'App\Http\Controllers\Admin\ArtistController@search_artist');
+Route::post('/songs/delete-artist', 'App\Http\Controllers\Admin\ArtistController@delete_artist');
+
+
+                            //Members
+Route::get('/get-members', 'App\Http\Controllers\Admin\MemberController@get_members');

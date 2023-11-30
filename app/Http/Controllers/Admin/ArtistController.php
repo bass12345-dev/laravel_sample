@@ -17,6 +17,39 @@ class ArtistController extends Controller
         $this->app_key   = config('app.key');
     }
 
+
+    public function add_artist(Request $request){
+
+
+        $id = $request->input('artist_id');
+        $items = array('artist_name'          => $request->input('artist'),'created' => '2022-02-12 02:17:52');
+
+        if (empty($id)) {
+        $add = DB::table('artist')->insert($items);
+        if ($add) {
+                $data = array('message' => 'Add Successfully' , 'response' => true );
+                }else {
+                $data = array('message' => 'Something Wrong' , 'response' => false );}
+        }else {
+
+            $update = DB::table('artist')->where('artist_id', $id)->update($items);
+
+            if ($update) {
+
+                $data = array('message' => 'Updated Successfully' , 'response' => true );
+
+            }else {
+
+                $data = array('message' => 'Something Wrong/No Changes Apply' , 'response' => false );
+            }
+        }
+        
+      
+        return response()->json($data);
+
+
+    }
+
     public function index(){
         $data['title'] = 'Artist';
         return view('admin.contents.artist.artist')->with($data);
@@ -24,7 +57,7 @@ class ArtistController extends Controller
 
     public function get_artists(){
 
-        $items = DB::table('artist')->orderBy('artist.artist_name', 'asc')->get();
+        $items = DB::table('artist')->orderBy('artist_name', 'asc')->get();
 
         $data = [];
         foreach ($items as $row) {
@@ -40,6 +73,23 @@ class ArtistController extends Controller
 
          return response()->json($data);
 }
+
+
+    public function delete_artist(Request $request){
+
+        $id = $request->input('id');
+
+        if (is_array($id)) {
+                foreach ($id as $row) {
+                $delete =  ArtistModel::where('artist_id', $row)->delete();
+                }
+                $data = array('message' => 'Deleted Succesfully' , 'response' => true);
+            }else{
+                 $data = array('message' => 'Error' , 'response' => false );
+            }
+
+          return response()->json($data);
+    }
 
     public function search_artist(){
 
