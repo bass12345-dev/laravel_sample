@@ -23,7 +23,7 @@ class SongsController extends Controller
         $data['title']              = 'Songs';
         $data['modal_title_add']    = 'Add Song';
         $data['modal_title_update'] = 'Update Song';
-        $data['song_type']          = DB::table('song_type')->get();
+        $data['song_type']          = DB::table('song_type')->orderBy('song_type.type', 'asc')->get();
         return view('admin.contents.songs.songs')->with($data);
     }
 
@@ -103,18 +103,19 @@ class SongsController extends Controller
 
     public function get_songs(){
 
-        $items = DB::table('songs')->orderBy('songs.song_title', 'asc')->get();
+        $items = DB::table('songs as songs')
+                ->leftJoin('artist as artist', 'artist.artist_id', '=', 'songs.artist_id')
+                ->select('songs.song_id as song_id','songs.song_title as song_title','songs.s_type as s_type','songs.key_c as key_c',
+                         'songs.wedding_song as wedding_song', 
+                         'artist.artist_id as   artist_id', 'artist.artist_name as artist_name')->orderBy('songs.song_title', 'asc')->get();
+
+
+        // $items = DB::table('songs')->orderBy('songs.song_title', 'asc')->get();
 
         $data = [];
         foreach ($items as $row) {
 
-            $data[] = array(
-
-
-                    'song_title'        => $row->song_title,
-                    'song_id'           => $row->song_id
-            );
-            // code...
+            $data[] = $row;
         }
 
 
@@ -128,8 +129,8 @@ class SongsController extends Controller
 
         $id = $request->input('song_id');
         $items = array(
-                            'song_title'         => $request->input('song_title'),
-                            'artist_id'          =>  $request->input('artist'),
+                            'song_title'         =>  $request->input('song_title'),
+                            'artist_id'          =>  $request->input('artist_id'),
                             's_type'             =>  $request->input('song_type'),
                             'wedding_song'       =>  $request->input('wedding') == 'on' ? 'yes' : 'no',
                             'key_c'              =>  $request->input('key_chords'),
@@ -148,7 +149,7 @@ class SongsController extends Controller
                 $data = array('message' => 'Something Wrong' , 'response' => false );}
         }else {
 
-            $update = DB::table('song_type')->where('song_type_id', $id)->update($items);
+            $update = DB::table('songs')->where('song_id', $id)->update($items);
 
             if ($update) {
 

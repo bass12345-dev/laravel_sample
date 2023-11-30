@@ -31,7 +31,7 @@
                                                         <div class="modal-footer">
                                                            
         
-                                                            <button class="btn" class="discard" data-bs-dismiss="modal"> <i class="flaticon-delete-1"></i> Discard</button>
+                                                            <button type="button" class="btn" class="discard" data-bs-dismiss="modal"> <i class="flaticon-delete-1"></i> Discard</button>
         
                                                             <button type="submit" id="btn-add-type" class="btn btn-primary">Add</button>
                                                         </div>

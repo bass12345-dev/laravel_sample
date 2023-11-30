@@ -330,7 +330,15 @@
             {
                 data: null,
                 render: function (data, type, row) {
-                    return '<button class="btn btn-primary" data-id="'+data['song_id']+'" data-type="'+data['song_title']+'" id="update_song">Update</button>';
+                    return '<button class="btn btn-primary" \
+                    data-id="'+data['song_id']+'" \
+                    data-song="'+data['song_title']+'" \
+                    data-artist-id="'+data['artist_id']+'" \
+                    data-artist-name="'+data['artist_name']+'" \
+                    data-song-type="'+data['s_type']+'" \
+                    data-key="'+data['key_c']+'" \
+                    data-wedding="'+data['wedding_song']+'" \
+                    id="update_song">Update</button>';
                 }
             },
 
@@ -342,12 +350,33 @@
 
 
     $(document).on('click', '#add_song', function(){ 
+        $('#add_song_form')[0].reset();
         $('#song_modal_title').text('Add Type');
         $('#btn-add-song').text('Add');
         $('#add_song_form').find('input[name=action]').val('add');  
-        $('#add_song_form').find('input[name=type_id]').val('');  
-        $('#add_song_form').find('input[name=type]').val('');  
+        $('#add_song_form').find('input[name=song_id]').val('');  
+
+        // $('#add_song_form').find('input[name=type]').val('');  
     });
+
+
+
+    $(document).on('click', '#update_song', function(){ 
+
+        $('#add_update_songs').modal('show');
+        $('#song_modal_title').text('Update Song');
+        $('#btn-add-song').text('Update');
+        $('#add_song_form').find('input[name=action]').val('update');  
+        $('#add_song_form').find('input[name=song_id]').val($(this).data('id')); 
+
+        $('#add_song_form').find('input[name=song_title]').val($(this).data('song')); 
+        $('#add_song_form').find('input[name=artist_id]').val($(this).data('artist-id')); 
+        $('#add_song_form').find('input[name=artist]').val($(this).data('artist-name')); 
+        $('#add_song_form').find('select[name=song_type]').val($(this).data('song-type'));  
+        $('#add_song_form').find('input[name=key_chords]').val($(this).data('key')); 
+        $(this).data('wedding') == 'yes' ? $( "#wedding" ).prop( "checked", true ) : $( "#wedding" ).prop( "checked", false );
+
+    })
 
     $('#add_song_form').on('submit', function(e){
         e.preventDefault();
@@ -426,13 +455,13 @@
             },
         }, )
         .bind('typeahead:selected', function (obj, data, name) {
-            $('input[name="search_artist"]').val(data.artist_name)
+            $('input[name="artist"]').val(data.artist_name)
             $('input[name="artist_id"]').val(data.artist_id);
            
         })
         .on('typeahead:cursorchanged', function (e, data, name) {
             try {
-                $('input[name="search_artist"]').val(data.artist_name);
+                $('input[name="artist"]').val(data.artist_name);
                 $('input[name="artist_id"]').val(data.artist_id);
             } catch (error) {
                 // error here...

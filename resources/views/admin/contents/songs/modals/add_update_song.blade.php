@@ -28,6 +28,7 @@
                                                                     <div class="row">
                                                                         <div class="col-md-12 mb-3">
                                                                             <div class="contact-location">
+                                                                                <input type="hidden" name="artist_id">
                                                                                 <input type="text" name="artist" class="form-control" placeholder="Song Artist" style="width: 100%;">
                                                                             </div>
                                                                         </div>
@@ -52,6 +53,7 @@
                                                                     <div class="row">
                                                                         <div class="col-md-12 mb-3">
                                                                             <div class="contact-location">
+
                                                                                 <input type="text" name="key_chords" class="form-control" placeholder="Key Chords">
                                                                             </div>
                                                                         </div>
@@ -61,7 +63,7 @@
                                                                         <div class="col-md-12 mb-3">
                                                                             <div class="contact-location">
                                                                                
-                                                                                <input type="checkbox" name="wedding" >
+                                                                                <input type="checkbox" name="wedding" id="wedding" class="wedding">
                                                                                  <label>is Wedding Song</label>
                                                                             </div>
                                                                         </div>
@@ -75,9 +77,9 @@
                                                     <div class="modal-footer">
                                                        
     
-                                                        <button class="btn" data-bs-dismiss="modal"> <i class="flaticon-delete-1"></i> Discard</button>
+                                                        <button type="button" class="btn" data-bs-dismiss="modal"> <i class="flaticon-delete-1"></i> Discard</button>
     
-                                                        <button id="btn-add-song" class="btn btn-primary">Add</button>
+                                                        <button type="submit" id="btn-add-song" class="btn btn-primary">Add</button>
                                                     </div>
                                                 </form>
                                                 </div>

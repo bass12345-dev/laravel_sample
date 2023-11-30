@@ -43,7 +43,20 @@ class ArtistController extends Controller
 
     public function search_artist(){
 
-        echo $_GET['key'];
+        $search = $_GET['key'];
+        $artist = ArtistModel::select("artist_id", "artist_name")
+                       ->where("artist_name", 'LIKE', "%".$search."%")
+                       ->get();
+
+
+
+        
+        $data     = [];
+        foreach ($artist as $row) {
+            $data[] = $row;
+        }
+
+        echo json_encode($data);
 
 
     }
