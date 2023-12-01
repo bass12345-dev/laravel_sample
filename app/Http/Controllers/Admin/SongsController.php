@@ -27,6 +27,47 @@ class SongsController extends Controller
         return view('admin.contents.songs.songs')->with($data);
     }
 
+     public function view_song(){
+
+       
+        $id                        = $_GET['id'];
+        $option                    = $_GET['option'];
+        $data['title']             = DB::table('members')->where('member_id', $id)->first()->full_name;
+        $data['options']           = DB::table('song_type')->orderBy('song_type.type', 'asc')->get();
+  
+
+
+        $data['songs']             = $option != 'all' ? $this->get_singer_songs_view_by_option($id,$option) : $this->get_singer_songs_view_no_option();    
+
+
+        return view('admin.contents.view_singer_songs.singer_songs')->with($data);
+
+
+
+    }
+
+    function get_singer_songs_view_by_option($id,$option){
+        $songs = DB::table('songs as songs')
+                                     ->leftJoin('singer_songs as singer_songs', 'singer_songs.so_id', '=', 'songs.song_id')
+                                     ->leftJoin('artist as artist', 'artist.artist_id', '=', 'songs.artist_id')
+                                     ->select('songs.song_id as song_id','songs.song_title as song_title','songs.s_type as s_type','songs.key_c as key_c',
+                                             'songs.wedding_song as wedding_song', 
+                                             'artist.artist_id as   artist_id', 'artist.artist_name as artist_name')->where('singer_songs.si_id',$id)->where('songs.s_type',$option)->orderBy('songs.song_title', 'asc')->get();
+
+        return $songs;
+    }
+
+     function get_singer_songs_view_no_option(){
+        $songs = DB::table('songs as songs')
+                                     ->leftJoin('singer_songs as singer_songs', 'singer_songs.so_id', '=', 'songs.song_id')
+                                     ->leftJoin('artist as artist', 'artist.artist_id', '=', 'songs.artist_id')
+                                     ->select('songs.song_id as song_id','songs.song_title as song_title','songs.s_type as s_type','songs.key_c as key_c',
+                                             'songs.wedding_song as wedding_song', 
+                                             'artist.artist_id as   artist_id', 'artist.artist_name as artist_name')->orderBy('songs.song_title', 'asc')->get();
+
+        return $songs;
+    }
+
     public function add_song_type(Request $request){
 
 
@@ -108,10 +149,6 @@ class SongsController extends Controller
                 ->select('songs.song_id as song_id','songs.song_title as song_title','songs.s_type as s_type','songs.key_c as key_c',
                          'songs.wedding_song as wedding_song', 
                          'artist.artist_id as   artist_id', 'artist.artist_name as artist_name')->orderBy('songs.song_title', 'asc')->get();
-
-
-        // $items = DB::table('songs')->orderBy('songs.song_title', 'asc')->get();
-
         $data = [];
         foreach ($items as $row) {
 
@@ -183,6 +220,33 @@ class SongsController extends Controller
 
           return response()->json($data);
     }
+
+
+
+
+        public function get_singer_songs(){
+
+        $id = $_GET['id'];
+
+        $items = DB::table('songs as songs')
+                 ->leftJoin('singer_songs as singer_songs', 'singer_songs.so_id', '=', 'songs.song_id')
+                 ->leftJoin('artist as artist', 'artist.artist_id', '=', 'songs.artist_id')
+                 ->select('songs.song_id as song_id','songs.song_title as song_title','songs.s_type as s_type','songs.key_c as key_c',
+                         'songs.wedding_song as wedding_song', 
+                         'artist.artist_id as   artist_id', 'artist.artist_name as artist_name')->where('singer_songs.si_id',$id)->orderBy('songs.song_title', 'asc')->get();
+
+
+        $data = [];
+        foreach ($items as $row) {
+
+            $data[] = $row;
+        }
+
+
+        return response()->json($data);
+
+    }
+
 
 
 

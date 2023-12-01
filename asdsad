@@ -1,0 +1,60 @@
+asdsad
+    // function load_singer_songs(){
+
+    //     $.ajax({
+    //           url: base_url + '/get-singer-songs?id=' + '<?php echo $_GET['id'] ?>',
+    //           type: "GET",
+    //           dataType: "json",
+    //           beforeSend: function() {
+
+    //                                 Swal.fire({
+    //                                     title: 'Getting some data',
+    //                                     html: 'Please wait...',
+    //                                     allowEscapeKey: false,
+    //                                     allowOutsideClick: false,
+    //                                     didOpen: () => {
+    //                                       Swal.showLoading()
+    //                                     }
+    //                                   });
+
+    //           },
+    //            headers: {
+    //             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+    //           },
+    //           success: function (data) {
+    //                Swal.close();
+
+    //                html = '';
+
+
+    //                if (data.length > 0) {
+
+    //                  for (var i = 0 ; i < data.length; i++) {
+             
+    //                     html += '<div class="item-content mb-2" ><div class="user-profile">\
+    //                                             <div class="user-meta-info m-2">\
+    //                                                 <p class="user-name" data-name="Alan Green">'+data[i].song_title+'</p>\
+    //                                                 <p class="user-work" data-occupation="Web Developer">'+data[i].artist_name+'</p>\
+    //                                             </div>\
+    //                                         </div>';
+    //                     html += ' </div>';
+
+
+    //                 }
+    //                 $('.singer_songs_table').html(html);
+    //                }else {
+    //                     alert('no data')
+    //                }
+
+                  
+    //           },
+    //           error :  function(xhr){
+    //             alert('Please reload the page if errors occur')
+    //             Swal.close();
+    //           }
+    //        })
+
+
+
+
+    // }

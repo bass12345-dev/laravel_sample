@@ -25,7 +25,10 @@ Route::prefix('user')->group(function  () {
         Route::get('/setlist', [App\Http\Controllers\Admin\SetlistController::class, 'index']);
         Route::get('/singers', [App\Http\Controllers\Admin\SingerController::class, 'index']);
         Route::get('/members', [App\Http\Controllers\Admin\MemberController::class, 'index']);
-});
+
+        Route::get('/view-artist-songs', [App\Http\Controllers\Admin\ArtistController::class, 'index']);
+        Route::get('/view-songs', [App\Http\Controllers\Admin\SongsController::class, 'view_song']);
+}); 
 
 
 
@@ -70,3 +73,10 @@ Route::post('/songs/delete-artist', 'App\Http\Controllers\Admin\ArtistController
                             //Members
 Route::get('/get-members', 'App\Http\Controllers\Admin\MemberController@get_members');
 Route::get('/get-singer-members', 'App\Http\Controllers\Admin\MemberController@get_singer_members');
+
+                            // Sessions
+Route::get('/get-singer-sessions', 'App\Http\Controllers\Admin\MemberController@get_singer_sessions');
+
+
+                            //Singer Songs
+Route::get('/get-singer-songs', 'App\Http\Controllers\Admin\SongsController@get_singer_songs');

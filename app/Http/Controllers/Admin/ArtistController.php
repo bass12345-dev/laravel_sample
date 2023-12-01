@@ -51,9 +51,19 @@ class ArtistController extends Controller
     }
 
     public function index(){
-        $data['title'] = 'Artist';
+        $data['title'] = 'Artist Song';
+        $id = $_GET['id'];
+        $data['song'] = DB::table('artist as artist')
+                ->leftJoin('songs as songs', 'songs.artist_id', '=', 'artist.artist_id')
+                ->leftJoin('song_type as song_type', 'song_type.song_type_id', '=', 'songs.s_type')
+                ->select('songs.song_id as song_id','songs.song_title as song_title','songs.s_type as s_type','songs.key_c as key_c',
+                         'songs.wedding_song as wedding_song', 'song_type.type as type',
+                         'artist.artist_id as   artist_id', 'artist.artist_name as artist_name')->where('artist.artist_id', $id )->orderBy('songs.song_title', 'asc')->get();
         return view('admin.contents.artist.artist')->with($data);
+
+              
     }
+
 
     public function get_artists(){
 

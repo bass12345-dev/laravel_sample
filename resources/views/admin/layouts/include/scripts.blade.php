@@ -259,12 +259,55 @@
             {
                 data: null,
                 render: function (data, type, row) {
-                    return '<button class="btn btn-primary" data-id="'+data['artist_id']+'" data-artist="'+data['artist_name']+'" id="update_artist">Update</button>';
+                    return '<button class="btn btn-primary" data-id="'+data['artist_id']+'" data-artist="'+data['artist_name']+'" id="update_artist">Update</button> <a class="btn btn-success" href="'+base_url+'/user/view-artist-songs?id='+data['artist_id']+'" data-id="'+data['artist_id']+'" data-artist="'+data['artist_name']+'">View</a>';
                 }
             },
 
 
     ],
+
+
+    });  
+
+
+
+   $('#artist_song_table').DataTable({
+
+        "dom": "<'dt--top-section'<'row'<'col-sm-12 col-md-6 d-flex justify-content-md-start justify-content-center'B><'col-sm-12 col-md-6 d-flex justify-content-md-end justify-content-center mt-md-0 mt-3'f>>>" +
+            "<'table-responsive'tr>" +
+            "<'dt--bottom-section d-sm-flex justify-content-sm-between text-center'<'dt--pages-count  mb-sm-0 mb-3'i><'dt--pagination'p>>",
+        buttons: {
+            buttons: [{
+                    extend: 'copy',
+                    className: 'btn'
+                },
+                {
+                    extend: 'csv',
+                    className: 'btn'
+                },
+                {
+                    extend: 'excel',
+                    className: 'btn'
+                },
+                {
+                    extend: 'print',
+                    className: 'btn'
+                }
+            ]
+        },
+        "oLanguage": {
+            "oPaginate": {
+                "sPrevious": '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-left"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>',
+                "sNext": '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-right"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>'
+            },
+            "sInfo": "Showing page _PAGE_ of _PAGES_",
+            "sSearch": '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-search"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>',
+            "sSearchPlaceholder": "Search...",
+            "sLengthMenu": "Results :  _MENU_",
+        },
+        "stripeClasses": [],
+        "lengthMenu": [7, 10, 20, 50],
+        "pageLength": 10,
 
 
     });  
@@ -521,7 +564,7 @@
                   
               },
               error :  function(xhr){
-                alert('something wrong')
+                // alert('Please reload the page if errors occur')
                 Swal.close();
               }
            })
@@ -565,20 +608,13 @@
 
                      for (var i = 0 ; i < data.length; i++) {
              
-                        html += '<div class="item-content mb-2" ><div class="user-profile">\
-                                                <div class="n-chk align-self-center text-center">\
-                                                    <div class="form-check form-check-primary me-0 mb-0">\
-                                                        <input class="form-check-input inbox-chkbox contact-chkbox" type="checkbox">\
-                                                    </div>\
-                                                </div>\
+                        html += '<a href="'+base_url+'/user/view-songs?id='+data[i].member_id+'&&option=all"><div class="item-content mb-2 view-singer-songs" data-id="'+data[i].member_id+'"   ><div class="user-profile">\
                                                 <div class="user-meta-info m-2">\
                                                     <p class="user-name" data-name="Alan Green">'+data[i].full_name+'</p>\
                                                     <p class="user-work" data-occupation="Web Developer">'+data[i].position+'</p>\
                                                 </div>\
                                             </div>';
-                        html += ' <div class="action-btn">\
-                                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-edit-2 edit"><path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"></path></svg>\
-                                            </div></div>';
+                        html += ' </div></a>';
 
 
                     }
@@ -590,7 +626,7 @@
                   
               },
               error :  function(xhr){
-                alert('something wrong')
+                 // alert('Please reload the page if errors occur')
                 Swal.close();
               }
            })
@@ -601,9 +637,84 @@
     }
 
 
+
+
+    function load_singer_sessions(){
+
+        $.ajax({
+              url: base_url + '/get-singer-sessions',
+              type: "GET",
+              dataType: "json",
+              beforeSend: function() {
+
+                                    Swal.fire({
+                                        title: 'Getting some data',
+                                        html: 'Please wait...',
+                                        allowEscapeKey: false,
+                                        allowOutsideClick: false,
+                                        didOpen: () => {
+                                          Swal.showLoading()
+                                        }
+                                      });
+
+              },
+               headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+              },
+              success: function (data) {
+                   Swal.close();
+
+                   html = '';
+
+
+                   if (data.length > 0) {
+
+                     for (var i = 0 ; i < data.length; i++) {
+             
+                        html += '<a href="'+base_url+'/user/view-songs?id='+data[i].member_id+'&&option=all"><div class="item-content mb-2" ><div class="user-profile">\
+                                                <div class="user-meta-info m-2">\
+                                                    <p class="user-name" data-name="Alan Green">'+data[i].full_name+'</p>\
+                                                    <p class="user-work" data-occupation="Web Developer">'+data[i].position+'</p>\
+                                                </div>\
+                                            </div>';
+                        html += ' </div></a>';
+
+
+                    }
+                    $('.singer_sessions_table').html(html);
+                   }else {
+                        alert('no data')
+                   }
+
+                  
+              },
+              error :  function(xhr){
+                // alert('Please reload the page if errors occur')
+                Swal.close();
+              }
+           })
+
+
+
+
+    }
+
+
+
+
+$('#song_type').on('change', function() {
+
+    var id = $('input[name=member_id]').val();
+    window.open(base_url + '/user/view-songs?id='+id+'&&option='+ $('select[id=song_type]').val(), '_self');
+
+})
+
+
 $(document).ready(function() {
    load_members();
    load_singer_members();
+   load_singer_sessions();
+   // load_singer_songs();
 });
 
 

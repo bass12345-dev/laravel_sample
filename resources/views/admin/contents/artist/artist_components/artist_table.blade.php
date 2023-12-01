@@ -4,52 +4,51 @@
                         <div class="statbox widget box box-shadow">
                             <div class="widget-content widget-content-area">
                         
-                                <table id="html5-extension" class="table dt-table-hover" style="width:100%">
+                                <table id="artist_song_table" class="table dt-table-hover" style="width:100%">
                                     <thead>
                                         <tr>
-                                            <th>Name</th>
-                                            <th>Position</th>
-                                            <th>Office</th>
-                                            <th>Age</th>
-                                            <th>Start date</th>
-                                            <th>Salary</th>
-                                            <th>Extn.</th>
-                                            <th>Avatar</th>
-                                            <th>Action</th>
+                                            <th>Song Title</th>
+                                            <th>Song Type</th>
+                                            <th>Key</th>
+                                            
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr>
-                                            <td>Tiger Nixon</td>
+                                        
+
+                                            <?php
+
+                                            $i = 0;
+
+                                            while ($i < count($song)) {
+
+                                                 echo '<tr> <td>'.$song[$i]->song_title.'</td>
+                                                            <td>'.$song[$i]->type.'</td>
+                                                            <td>'.$song[$i]->key_c.'</td> 
+                                                        </tr>';
+                                                $i++;
+                                            }
+
+
+                                            // for ($i=0; $i < count($song); $i++) {
+
+                                            //     echo $song[$i]->song_title;
+                                            //     // code...
+                                            // }
+
+                                            //     foreach ($song as $roe) {
+                                                    
+                                            //         echo '<tr><td>Tiger Nixon</td>
+                                            // <td>System Architect</td>
+                                            // <td>Edinburgh</td> </tr>';
+                                            //     }
+
+                                             ?>
+                                          <!--   <td>Tiger Nixon</td>
                                             <td>System Architect</td>
-                                            <td>Edinburgh</td>
-                                            <td>61</td>
-                                            <td>2011/04/25</td>
-                                            <td>$320,800</td>
-                                            <td>5421</td>
-                                            <td>
-                                                <div class="d-flex">
-                                                    <div class="usr-img-frame mr-2 rounded-circle">
-                                                        <img alt="avatar" class="img-fluid rounded-circle" src="../src/assets/img/boy.png">
-                                                    </div>
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <div class="btn-group">
-                                                    <button type="button" class="btn btn-dark btn-sm">Open</button>
-                                                    <button type="button" class="btn btn-dark btn-sm dropdown-toggle dropdown-toggle-split" id="dropdownMenuReference1" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-reference="parent">
-                                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-down"><polyline points="6 9 12 15 18 9"></polyline></svg>
-                                                    </button>
-                                                    <div class="dropdown-menu" aria-labelledby="dropdownMenuReference1">
-                                                        <a class="dropdown-item" href="#">Action</a>
-                                                        <a class="dropdown-item" href="#">Another action</a>
-                                                        <a class="dropdown-item" href="#">Something else here</a>
-                                                        <div class="dropdown-divider"></div>
-                                                        <a class="dropdown-item" href="#">Separated link</a>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                        </tr>
+                                            <td>Edinburgh</td> -->
+                                            
+                                       
                                 
                                     </tbody>
                                 </table>
