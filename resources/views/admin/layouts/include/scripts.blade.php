@@ -565,6 +565,90 @@
      });
 
 
+                                        //Setlist
+
+
+    $(document).on('click','#table-switcher',function (e) {
+
+        var list_setlist = $('#list_setlist').attr('hidden', true);
+        var table_setlist = $('#table_setlist').attr('hidden', false);
+        $(this).attr('hidden', true);
+        $('button#table-switcher1').attr('hidden', false);
+
+    });
+
+    $(document).on('click','#table-switcher1',function (e) {
+
+        var list_setlist = $('#list_setlist').attr('hidden', false);
+        var table_setlist = $('#table_setlist').attr('hidden', true);
+        $('button#table-switcher').attr('hidden', false);
+        $(this).attr('hidden', true);
+
+    });
+
+
+
+    function load_gigs(){
+
+        $.ajax({
+              url: base_url + '/get-gigs',
+              type: "GET",
+              dataType: "json",
+              beforeSend: function() {
+
+                                    Swal.fire({
+                                        title: 'Getting some data',
+                                        html: 'Please wait...',
+                                        allowEscapeKey: false,
+                                        allowOutsideClick: false,
+                                        didOpen: () => {
+                                          Swal.showLoading()
+                                        }
+                                      });
+
+              },
+               headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+              },
+              success: function (data) {
+
+                Swal.close();
+                 html = '';
+                if (data.length > 0) {
+                for (var i = 5 ; i < data.length; i++) {
+
+                    html += '<div class="timeline-list mt-2"> \
+                                            <div class="bor p-4" style="border: 1px solid green; border-radius: 15px;">\
+                                            <div class="timeline-post-content" >\
+                                                <div class="user-profile">\
+                                                    <img src="{{ asset("assets/music.png") }}" alt="">\
+                                                </div>\
+                                                <div class="">\
+                                                    <h4>'+data[i].location+'</h4><br>\
+                                                    <p class="meta-time-date">Date : '+data[i].date+' - Start Time: '+data[i].time+'</p>\
+                                                    <p class="meta-time-date">Added by : '+data[i].full_name+'</p>\
+                                                    <div class="">\
+                                                    </div>\
+                                                </div>\
+                                            </div>\
+                                        </div>\
+                                    </div>';
+
+
+                }
+
+                $('.populate_gigs').html(html);
+            }
+
+
+              }
+
+            })
+
+
+    }
+
+
                                         //Members
 
     function load_members(){
@@ -704,6 +788,7 @@ $('#song_type').on('change', function() {
 
 $(document).ready(function() {
    load_members();
+   load_gigs();
   
 });
 

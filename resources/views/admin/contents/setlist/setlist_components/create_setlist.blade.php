@@ -26,7 +26,7 @@
 
 
     
-                                                    <div class="media  d-md-flex d-block">
+                                                    <div class="media  d-md-flex d-block p-2">
                                                       
                                                         <div class="media-body">
                                                             <div class="d-xl-flex d-block justify-content-between">
@@ -41,7 +41,7 @@
                                                         </div>
                                                     </div>
     
-                                                    <div class="media  d-md-flex d-block">
+                                                    <div class="media  d-md-flex d-block p-2">
                                                       
                                                         <div class="media-body">
                                                             <div class="d-xl-flex d-block justify-content-between">
@@ -65,7 +65,7 @@
                                                 <div class="align-self-center text-center"><h1>2<h1></div>
                                                    
                                                 <div id='right-defaults' class='dragula'>
-                                                    <div class="media  d-md-flex d-block">
+                                                    <div class="media  d-md-flex d-block p-2">
                                                        
                                                         <div class="media-body">
                                                             <div class="d-xl-flex d-block justify-content-between">
@@ -80,7 +80,7 @@
                                                         </div>
                                                     </div>
     
-                                                    <div class="media  d-md-flex d-block">
+                                                    <div class="media  d-md-flex d-block p-2">
                                                         
                                                         <div class="media-body">
                                                             <div class="d-xl-flex d-block justify-content-between">

@@ -85,3 +85,6 @@ Route::get('/get-singer-sessions', 'App\Http\Controllers\Admin\MemberController@
                             //Singer Songs
 Route::get('/get-singer-songs', 'App\Http\Controllers\Admin\SongsController@get_singer_songs');
 Route::post('/get_singer_songs', 'App\Http\Controllers\Admin\SongsController@get_singer_songs1');
+
+                            //Gigs
+Route::get('/get-gigs', 'App\Http\Controllers\Admin\SetlistController@get_gigs');
