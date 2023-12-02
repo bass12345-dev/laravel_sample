@@ -66,7 +66,7 @@
                                                     <p class="user-name" data-name="Alan Green">'.$row->song_title.'</p>
                                                     <p class="user-work" data-occupation="Web Developer">'.$row->artist_name.'</p>
                                                 </div>
-                                                
+
                                             </div><div class="action-btn"><p class="user-name" >'.$row->key_c.'</p></div>
                         				</div>';
 
