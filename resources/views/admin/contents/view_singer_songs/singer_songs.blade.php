@@ -13,6 +13,8 @@
         <div class="row layout-top-spacing">
 
         	<div class="col-md-12">
+
+                <h4 class="text-danger">{{ $count }}</h4>
     		
                             <div class="widget-content searchable-container list">
     
@@ -64,7 +66,8 @@
                                                     <p class="user-name" data-name="Alan Green">'.$row->song_title.'</p>
                                                     <p class="user-work" data-occupation="Web Developer">'.$row->artist_name.'</p>
                                                 </div>
-                                            </div>
+                                                
+                                            </div><div class="action-btn"><p class="user-name" >'.$row->key_c.'</p></div>
                         				</div>';
 
 

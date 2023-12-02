@@ -28,8 +28,8 @@
     <script src=" {{ asset('assets\src\plugins\src\contact\contacts.js') }}"></script>
      <script src=" {{ asset('assets/js/overly.js') }}"></script>
      <script src=" {{ asset('assets/js/alert/alertify.js') }}"></script>
-     <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/11.10.1/sweetalert2.min.js" integrity="sha512-lhtxV2wFeGInLAF3yN3WN/2wobmk+HuoWjyr3xgft42IY0xv4YN7Ao8VnYOwEjJH1F7I+fadwFQkVcZ6ege6kA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-     <script src="https://unpkg.com/typeahead.js@0.11.1/dist/typeahead.bundle.js" ></script>
+     <script src="{{ asset('assets/js/sweet.js') }}" ></script>
+     <script src="{{ asset('assets/typeahead/typeahead.js') }}" ></script>
     
     <script>
 

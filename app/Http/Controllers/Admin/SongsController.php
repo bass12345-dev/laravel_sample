@@ -39,7 +39,9 @@ class SongsController extends Controller
   
 
 
-        $data['songs']             = $option != 'all' ? $this->get_singer_songs_view_by_option($id,$option) : $this->get_singer_songs_view_no_option($id);    
+        $data['songs']             = $option != 'all' ? $this->get_singer_songs_view_by_option($id,$option)->get() : $this->get_singer_songs_view_no_option($id)->get();
+
+        $data['count']             =  $option != 'all' ? $this->get_singer_songs_view_by_option($id,$option)->count() : $this->get_singer_songs_view_no_option($id)->count();  
 
 
         return view('admin.contents.view_singer_songs.singer_songs')->with($data);
@@ -54,7 +56,7 @@ class SongsController extends Controller
                                      ->leftJoin('artist as artist', 'artist.artist_id', '=', 'songs.artist_id')
                                      ->select('songs.song_id as song_id','songs.song_title as song_title','songs.s_type as s_type','songs.key_c as key_c',
                                              'songs.wedding_song as wedding_song', 
-                                             'artist.artist_id as   artist_id', 'artist.artist_name as artist_name')->where('singer_songs.si_id',$id)->where('songs.s_type',$option)->orderBy('songs.song_title', 'asc')->get();
+                                             'artist.artist_id as   artist_id', 'artist.artist_name as artist_name')->where('singer_songs.si_id',$id)->where('songs.s_type',$option)->orderBy('songs.song_title', 'asc');
 
         return $songs;
     }
@@ -65,7 +67,7 @@ class SongsController extends Controller
                                      ->leftJoin('artist as artist', 'artist.artist_id', '=', 'songs.artist_id')
                                      ->select('songs.song_id as song_id','songs.song_title as song_title','songs.s_type as s_type','songs.key_c as key_c',
                                              'songs.wedding_song as wedding_song', 
-                                             'artist.artist_id as   artist_id', 'artist.artist_name as artist_name')->where('singer_songs.si_id',$id)->orderBy('songs.song_title', 'asc')->get();
+                                             'artist.artist_id as   artist_id', 'artist.artist_name as artist_name')->where('singer_songs.si_id',$id)->orderBy('songs.song_title', 'asc');
 
         return $songs;
     }

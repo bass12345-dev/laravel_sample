@@ -52,9 +52,9 @@ return [
     |
     */
 
-    'url' => env('APP_URL', 'http://localhost/laravel_sample/'),
+    'url' => env('APP_URL', 'http://192.168.1.110/laravel_sample/'),
 
-    'asset_url' => env('ASSET_URL', 'http://localhost/laravel_sample/public/'),
+    'asset_url' => env('ASSET_URL', 'http://192.168.1.110/laravel_sample/public/'),
 
     /*
     |--------------------------------------------------------------------------
