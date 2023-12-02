@@ -24,7 +24,7 @@ class MemberController extends Controller
 
     public function get_members(){
 
-        $items = DB::table('members')->where('type','member')->orderBy('full_name', 'asc')->get();
+        $items = DB::table('members')->orderBy('full_name', 'asc')->get();
         $data = [];
         foreach ($items as $row) {
 
@@ -32,7 +32,9 @@ class MemberController extends Controller
 
                     'full_name'        => $row->full_name,
                     'member_id'        => $row->member_id,
-                    'position'         => $row->position
+                    'position'         => $row->position,
+                    'type'             => $row->type,
+                    'count_song'       => DB::table('singer_songs')->where('si_id',$row->member_id)->count()
 
             );
         }

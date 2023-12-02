@@ -61,6 +61,8 @@ Route::post('/songs/delete-type', 'App\Http\Controllers\Admin\SongsController@de
 Route::post('/songs/au-song', 'App\Http\Controllers\Admin\SongsController@add_song');
 Route::get('/songs/get-songs', 'App\Http\Controllers\Admin\SongsController@get_songs');
 Route::post('/songs/delete-songs', 'App\Http\Controllers\Admin\SongsController@delete_song');
+Route::post('/songs/add-singer-songs', 'App\Http\Controllers\Admin\SongsController@add_singer_songs');
+
 
                             //Artists
 
@@ -74,9 +76,12 @@ Route::post('/songs/delete-artist', 'App\Http\Controllers\Admin\ArtistController
 Route::get('/get-members', 'App\Http\Controllers\Admin\MemberController@get_members');
 Route::get('/get-singer-members', 'App\Http\Controllers\Admin\MemberController@get_singer_members');
 
+
+
                             // Sessions
 Route::get('/get-singer-sessions', 'App\Http\Controllers\Admin\MemberController@get_singer_sessions');
 
 
                             //Singer Songs
 Route::get('/get-singer-songs', 'App\Http\Controllers\Admin\SongsController@get_singer_songs');
+Route::post('/get_singer_songs', 'App\Http\Controllers\Admin\SongsController@get_singer_songs1');

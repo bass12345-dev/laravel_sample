@@ -22,7 +22,7 @@ class ArtistController extends Controller
 
 
         $id = $request->input('artist_id');
-        $items = array('artist_name'          => $request->input('artist'),'created' => '2022-02-12 02:17:52');
+        $items = array('artist_name'          => $request->input('artist1'),'created' => date('Y-m-d H:i:s', time()));
 
         if (empty($id)) {
         $add = DB::table('artist')->insert($items);

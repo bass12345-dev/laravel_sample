@@ -58,3 +58,16 @@ asdsad
 
 
     // }
+
+
+
+              <?php
+
+                                                                                foreach ($singers as $row) {
+
+
+                                                                                    echo '   <div class="col-md-12 mb-2" ><input type="checkbox" style="width: 20px; height: 20px;" name="multi_singer_songs"  value="'.$row->member_id.'" placeholder="Artist">
+                                                                                     <label style="font-size: 20px;" class="m-1">'.$row->full_name.'</label></div>';
+                                                                                }
+
+                                                                             ?>

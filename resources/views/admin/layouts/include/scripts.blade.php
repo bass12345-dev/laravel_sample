@@ -36,46 +36,9 @@
 
 
     var base_url = '<?php echo url('/'); ?>';
-    alertify.success('Success message');
 
 
-        $('#html5-extensio').DataTable({
-        "dom": "<'dt--top-section'<'row'<'col-sm-12 col-md-6 d-flex justify-content-md-start justify-content-center'B><'col-sm-12 col-md-6 d-flex justify-content-md-end justify-content-center mt-md-0 mt-3'f>>>" +
-            "<'table-responsive'tr>" +
-            "<'dt--bottom-section d-sm-flex justify-content-sm-between text-center'<'dt--pages-count  mb-sm-0 mb-3'i><'dt--pagination'p>>",
-        buttons: {
-            buttons: [{
-                    extend: 'copy',
-                    className: 'btn'
-                },
-                {
-                    extend: 'csv',
-                    className: 'btn'
-                },
-                {
-                    extend: 'excel',
-                    className: 'btn'
-                },
-                {
-                    extend: 'print',
-                    className: 'btn'
-                }
-            ]
-        },
-        "oLanguage": {
-            "oPaginate": {
-                "sPrevious": '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-left"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>',
-                "sNext": '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-right"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>'
-            },
-            "sInfo": "Showing page _PAGE_ of _PAGES_",
-            "sSearch": '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-search"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>',
-            "sSearchPlaceholder": "Search...",
-            "sLengthMenu": "Results :  _MENU_",
-        },
-        "stripeClasses": [],
-        "lengthMenu": [7, 10, 20, 50],
-        "pageLength": 10
-    });
+
 
 
                                             //SONG TYPE SECTION
@@ -319,7 +282,7 @@
         $('#btn-add-artist').text('Add');
         $('#add_artist_form').find('input[name=action]').val('add');  
         $('#add_artist_form').find('input[name=artist_id]').val('');  
-        $('#add_artist_form').find('input[name=artist]').val('');  
+        $('#add_artist_form').find('input[name=artist1]').val('');  
     });
 
 
@@ -329,7 +292,7 @@
         $('#btn-add-artist').text('Update');
         $('#add_artist_form').find('input[name=action]').val('update');  
         $('#add_artist_form').find('input[name=artist_id]').val($(this).data('id'));  
-        $('#add_artist_form').find('input[name=artist]').val($(this).data('artist'));  
+        $('#add_artist_form').find('input[name=artist1]').val($(this).data('artist'));  
     })
 
     $('#add_artist_form').on('submit', function(e){
@@ -420,6 +383,10 @@
              {
                 data: "song_title",
             },
+
+             {
+                data: "artist_name",
+            },
             
             {
                 data: null,
@@ -432,7 +399,9 @@
                     data-song-type="'+data['s_type']+'" \
                     data-key="'+data['key_c']+'" \
                     data-wedding="'+data['wedding_song']+'" \
-                    id="update_song">Update</button>';
+                    id="update_song">Update</button> \
+                    <button class="btn btn-success" \
+                    id="add_singer_songs"  data-id="'+data['song_id']+'" >Add</i></button>';
                 }
             },
 
@@ -440,7 +409,98 @@
     ],
 
 
-    });  
+    }); 
+
+
+     $(document).on('click', '#add_singer_songs', function(){ 
+
+        $('#add_singer_songs_modal').modal('show');
+
+        var id = $(this).data('id');
+
+
+
+         $.ajax({
+              url: base_url + '/get_singer_songs',
+              type: "POST",
+              data : { id : id},
+              dataType: "json",
+              beforeSend: function() {
+
+                                    Swal.fire({
+                                        title: 'Getting some data',
+                                        html: 'Please wait...',
+                                        allowEscapeKey: false,
+                                        allowOutsideClick: false,
+                                        didOpen: () => {
+                                          Swal.showLoading()
+                                        }
+                                      });
+
+              },
+               headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+              },
+              success: function (data) {
+                $('input[name=s_song_id]').val(id)
+                var singers = '';
+                if (data.length > 0) {
+
+                    for(let item of data){
+
+                         singers += '<div class="fv-row mb-7"><input  type="checkbox" class="" name="multi_singer_songs" value="'+item.singer_id+'" '+item.x+' > <label class="required fw-bold fs-6 mb-2">'+item.singer_name+'</label></div>' 
+                    }
+
+                    $('.singer-list').html(singers);
+
+
+                }
+
+                Swal.close();
+
+            
+
+
+              },
+                error :  function(xhr){
+                alert('Please click add again if error occur');
+                Swal.close();
+                $('#add_singer_songs_modal').modal('hide');
+              }
+
+
+        })
+
+     });
+
+
+    $(document).on('click','#btn-add-singer-songs',function (e) {
+
+        var selectedValues = [];
+        var song_id = $('input[name=s_song_id]').val()
+        $('input[name=multi_singer_songs]:checked').map(function() {
+                    selectedValues.push($(this).val());
+        });
+
+
+
+        if (selectedValues.length < 1) {
+            alert('please Select at least one');
+        }else {
+
+            var table   = song_table;
+            var url     = '/songs/add-singer-songs';
+            var action = 'update';
+            var data = { song_id : song_id , id : selectedValues};
+            var modal = $('#add_singer_songs_modal');
+            var form = '';
+
+            add_ajax(data,table,url,action,modal,form);
+        }
+
+
+
+     });
 
 
     $(document).on('click', '#add_song', function(){ 
@@ -475,7 +535,7 @@
     $('#add_song_form').on('submit', function(e){
         e.preventDefault();
         var data = $(this).serialize();
-        var table = '';
+        var table = song_table;
         var url = '/songs/au-song';
         var form = $('#add_song_form');
         var action = form.find('input[name=action]').val();
@@ -533,13 +593,23 @@
                    Swal.close();
 
                    html = '';
+                   html1 = '';
+
+                   singer_members = '';
+                   session_members = '';
 
 
                    if (data.length > 0) {
 
                      for (var i = 0 ; i < data.length; i++) {
+
+                        var count_song = '<p class="user-name" >'+data[i].count_song+'</p>';
              
-                        html += '<div class="item-content mb-2" ><div class="user-profile">\
+
+                        if (data[i].type == 'member') {
+
+
+                             html += '<div class="item-content mb-2" ><div class="user-profile">\
                                                 <div class="n-chk align-self-center text-center">\
                                                     <div class="form-check form-check-primary me-0 mb-0">\
                                                         <input class="form-check-input inbox-chkbox contact-chkbox" type="checkbox">\
@@ -555,8 +625,56 @@
                                             </div></div>';
 
 
+                        singer_members += '<a href="'+base_url+'/user/view-songs?id='+data[i].member_id+'&&option=all"><div class="item-content mb-2 view-singer-songs" data-id="'+data[i].member_id+'"   ><div class="user-profile">\
+                                                    <div class="user-meta-info m-2">\
+                                                        <p class="user-name" data-name="Alan Green">'+data[i].full_name+'</p>\
+                                                        <p class="user-work" data-occupation="Web Developer">'+data[i].position+'</p>\
+                                                    </div>\
+                                                </div> <div class="action-btn">\
+                                                '+count_song+'\
+                                            </div></div></a>';
+                          
+
+                        }
+
+                    
+                        if (data[i].type == 'session') {
+
+                            html1 += '<div class="item-content mb-2" ><div class="user-profile">\
+                                                <div class="n-chk align-self-center text-center">\
+                                                    <div class="form-check form-check-primary me-0 mb-0">\
+                                                        <input class="form-check-input inbox-chkbox contact-chkbox" type="checkbox">\
+                                                    </div>\
+                                                </div>\
+                                                <div class="user-meta-info m-2">\
+                                                    <p class="user-name" data-name="Alan Green">'+data[i].full_name+'</p>\
+                                                    <p class="user-work" data-occupation="Web Developer">'+data[i].position+'</p>\
+                                                </div>\
+                                            </div>';
+                        html1 += ' <div class="action-btn">\
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-edit-2 edit"><path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"></path></svg>\
+                                            </div></div>';
+
+
+
+                        session_members += '<a href="'+base_url+'/user/view-songs?id='+data[i].member_id+'&&option=all"><div class="item-content mb-2 view-singer-songs" data-id="'+data[i].member_id+'"   ><div class="user-profile">\
+                                                    <div class="user-meta-info m-2">\
+                                                        <p class="user-name" data-name="Alan Green">'+data[i].full_name+'</p>\
+                                                        <p class="user-work" data-occupation="Web Developer">'+data[i].position+'</p>\
+                                                    </div>\
+                                                </div> <div class="action-btn">\
+                                                '+count_song+'\
+                                            </div></div></div> </a>';
+
+                        }
+                        
+
+
                     }
                     $('.members_table').html(html);
+                    $('.sessions_table').html(html1);
+                    $('.singer_members_table').html(singer_members);
+                    $('.singer_sessions_table').html(session_members);
                    }else {
                         alert('no data')
                    }
@@ -573,132 +691,6 @@
 
 
     }
-
-
-
-    function load_singer_members(){
-
-        $.ajax({
-              url: base_url + '/get-singer-members',
-              type: "GET",
-              dataType: "json",
-              beforeSend: function() {
-
-                                    Swal.fire({
-                                        title: 'Getting some data',
-                                        html: 'Please wait...',
-                                        allowEscapeKey: false,
-                                        allowOutsideClick: false,
-                                        didOpen: () => {
-                                          Swal.showLoading()
-                                        }
-                                      });
-
-              },
-               headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-              },
-              success: function (data) {
-                   Swal.close();
-
-                   html = '';
-
-
-                   if (data.length > 0) {
-
-                     for (var i = 0 ; i < data.length; i++) {
-             
-                        html += '<a href="'+base_url+'/user/view-songs?id='+data[i].member_id+'&&option=all"><div class="item-content mb-2 view-singer-songs" data-id="'+data[i].member_id+'"   ><div class="user-profile">\
-                                                <div class="user-meta-info m-2">\
-                                                    <p class="user-name" data-name="Alan Green">'+data[i].full_name+'</p>\
-                                                    <p class="user-work" data-occupation="Web Developer">'+data[i].position+'</p>\
-                                                </div>\
-                                            </div>';
-                        html += ' </div></a>';
-
-
-                    }
-                    $('.singer_members_table').html(html);
-                   }else {
-                        alert('no data')
-                   }
-
-                  
-              },
-              error :  function(xhr){
-                 // alert('Please reload the page if errors occur')
-                Swal.close();
-              }
-           })
-
-
-
-
-    }
-
-
-
-
-    function load_singer_sessions(){
-
-        $.ajax({
-              url: base_url + '/get-singer-sessions',
-              type: "GET",
-              dataType: "json",
-              beforeSend: function() {
-
-                                    Swal.fire({
-                                        title: 'Getting some data',
-                                        html: 'Please wait...',
-                                        allowEscapeKey: false,
-                                        allowOutsideClick: false,
-                                        didOpen: () => {
-                                          Swal.showLoading()
-                                        }
-                                      });
-
-              },
-               headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-              },
-              success: function (data) {
-                   Swal.close();
-
-                   html = '';
-
-
-                   if (data.length > 0) {
-
-                     for (var i = 0 ; i < data.length; i++) {
-             
-                        html += '<a href="'+base_url+'/user/view-songs?id='+data[i].member_id+'&&option=all"><div class="item-content mb-2" ><div class="user-profile">\
-                                                <div class="user-meta-info m-2">\
-                                                    <p class="user-name" data-name="Alan Green">'+data[i].full_name+'</p>\
-                                                    <p class="user-work" data-occupation="Web Developer">'+data[i].position+'</p>\
-                                                </div>\
-                                            </div>';
-                        html += ' </div></a>';
-
-
-                    }
-                    $('.singer_sessions_table').html(html);
-                   }else {
-                        alert('no data')
-                   }
-
-                  
-              },
-              error :  function(xhr){
-                // alert('Please reload the page if errors occur')
-                Swal.close();
-              }
-           })
-
-
-
-
-    }
-
 
 
 
@@ -712,9 +704,7 @@ $('#song_type').on('change', function() {
 
 $(document).ready(function() {
    load_members();
-   load_singer_members();
-   load_singer_sessions();
-   // load_singer_songs();
+  
 });
 
 

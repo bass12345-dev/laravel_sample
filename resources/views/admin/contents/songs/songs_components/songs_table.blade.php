@@ -12,7 +12,8 @@
                                     <thead>
                                         <tr>
                                             <th>#</th>
-                                            <th>Type Name</th>
+                                            <th>Song Title</th>
+                                            <th>Artist Name</th>
                                             <th>Action</th>
                                         </tr>
                                     </thead>

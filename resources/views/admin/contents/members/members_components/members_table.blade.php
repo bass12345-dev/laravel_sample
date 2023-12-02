@@ -36,6 +36,13 @@
                                     </div>
     
                                     <div class="items members_table"></div>
+
+                                     <div class="align-self-center text-center p-3">
+
+                                            <h4>Sessions</h4>
+                                         
+                                     </div>
+                                    <div class="items sessions_table"></div>
     
                             </div>
                         </div>

@@ -19,10 +19,11 @@
          @include('admin.contents.songs.songs_components.type_table')
         </div>       
         </div>
-
+         @include('admin.contents.songs.modals.add_singer_songs_modal')
          @include('admin.contents.songs.modals.add_update_song')
          @include('admin.contents.songs.modals.add_update_artist')
          @include('admin.contents.songs.modals.add_update_type')
+
     </div>
 
 
