@@ -34,19 +34,68 @@ class SetlistController extends Controller
 
             $data[] = array(
 
-                    'date'    => $row->date,
-                    'time'    => $row->time,
-                    'full_name'    => $row->full_name,
-                    'gig_id'    => $row->gig_id,
-                    'location'    => $row->location,
-                    'member_id'    => $row->member_id,
-                    'number_of_sets'    => $row->number_of_sets
+                    'date'              => $row->date,
+                    'event'             => $row->event,
+                    'time'              => $row->time,
+                    'full_name'         => $row->full_name,
+                    'gig_id'            => $row->gig_id,
+                    'location'          => $row->location,
+                    'member_id'         => $row->member_id,
+                    'number_of_sets'    => $row->number_of_sets,
+                    'x'                 => date('Y-m-d', time()) == date('Y-m-d', strtotime($row->date)) ? true : false
             );
             // code...
         }
 
 
         return response()->json($data);
+
+    }
+
+
+
+
+    public function add_gig(Request $request){
+
+
+        $id = $request->input('gig_id');
+        $items = array(
+
+            'location'          => $request->input('location'),
+            'date'              => $request->input('date'),
+            'event'             => $request->input('event'),
+            'number_of_sets'    => $request->input('number_of_sets'),
+            'created'           => date('Y-m-d H:i:s', time()),
+            'm_id'              => 12
+        );
+
+
+
+        if (empty($id)) {
+
+        $add = DB::table('gigs')->insert($items);
+        if ($add) {
+                $data = array('message' => 'Add Successfully' , 'response' => true );
+                }else {
+                $data = array('message' => 'Something Wrong' , 'response' => false );}
+        
+        }else {
+
+            $update = DB::table('gigs')->where('gig_id', $id)->update($items);
+
+            if ($update) {
+
+                $data = array('message' => 'Updated Successfully' , 'response' => true );
+
+            }else {
+
+                $data = array('message' => 'Something Wrong/No Changes Apply' , 'response' => false );
+            }
+        }
+        
+      
+        return response()->json($data);
+
 
     }
 }

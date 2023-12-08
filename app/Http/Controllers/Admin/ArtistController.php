@@ -25,12 +25,33 @@ class ArtistController extends Controller
         $items = array('artist_name'          => $request->input('artist1'),'created' => date('Y-m-d H:i:s', time()));
 
         if (empty($id)) {
-        $add = DB::table('artist')->insert($items);
+
+            $count = DB::table('artist')
+                ->where('artist_name', 'like', $items['artist_name'])
+                ->count();
+
+
+            
+
+        if ($count > 0) {
+
+
+            $data = array('message' => 'Artist Already Exist' , 'response' => false );
+
+            // code...
+        }else {
+
+            $add = DB::table('artist')->insert($items);
         if ($add) {
                 $data = array('message' => 'Add Successfully' , 'response' => true );
                 }else {
                 $data = array('message' => 'Something Wrong' , 'response' => false );}
+        }
+
+        
         }else {
+
+
 
             $update = DB::table('artist')->where('artist_id', $id)->update($items);
 

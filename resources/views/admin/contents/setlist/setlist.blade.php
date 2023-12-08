@@ -11,7 +11,8 @@
         @include('admin.contents.components.title')   
         <button class="btn btn-primary mt-2" id="table-switcher">Setlist Table</button>     
          <button class="btn btn-primary mt-2" id="table-switcher1" hidden>Setlist List</button>     
-         <button class="btn btn-primary mt-2" id="table-switcher1" >Add</button>     
+         <button class="btn btn-primary mt-2"  id="add-gig-button" >Add</button>
+         <button class="btn btn-danger mt-2"  id="delete-gig-button" hidden>Delete</button>     
         <!--  END BREADCRUMBS  -->
         <div class="row layout-top-spacing">
             <div class="row">
@@ -22,5 +23,7 @@
         </div>
     </div>
 </div>
+
+ @include('admin.contents.setlist.modal.add_update_gig')
 
 @endsection

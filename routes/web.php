@@ -88,3 +88,4 @@ Route::post('/get_singer_songs', 'App\Http\Controllers\Admin\SongsController@get
 
                             //Gigs
 Route::get('/get-gigs', 'App\Http\Controllers\Admin\SetlistController@get_gigs');
+Route::post('setlist/ap-gig', 'App\Http\Controllers\Admin\SetlistController@add_gig');

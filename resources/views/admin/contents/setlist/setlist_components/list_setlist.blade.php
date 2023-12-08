@@ -2,7 +2,7 @@
                         <div class="statbox widget box box-shadow">
                             <div class="widget-content widget-content-area p-2">
                             <div class="timeline-simple">
-                                        <p class="timeline-title">Gigs</p>
+                                        <p class="timeline-title">Gigs | <span class="text-danger number_of_gigs"> 123</span></p>
 
                                         <div class="populate_gigs">
 <!-- 

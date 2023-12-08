@@ -79,11 +79,25 @@ class SongsController extends Controller
         $items = array('type'          => $request->input('type'));
 
         if (empty($id)) {
+
+
+        $count = DB::table('song_type')
+                ->where('type', 'like', $items['type'])
+                ->count();
+
+        if ($count > 0) {
+
+            $data = array('message' => 'Type Already Exist' , 'response' => false );
+
+        }else {
+
         $add = DB::table('song_type')->insert($items);
         if ($add) {
                 $data = array('message' => 'Add Successfully' , 'response' => true );
                 }else {
                 $data = array('message' => 'Something Wrong' , 'response' => false );}
+
+        }
         }else {
 
             $update = DB::table('song_type')->where('song_type_id', $id)->update($items);
@@ -183,11 +197,27 @@ class SongsController extends Controller
 
 
         if (empty($id)) {
+
+
+        $count = DB::table('songs')
+                ->where('song_title', 'like', $items['song_title'])
+                ->count();
+
+        if ($count > 0) {
+
+            $data = array('message' => 'Song Already Exist' , 'response' => false );
+
+        }else {
+
+
+
         $add = DB::table('songs')->insert($items);
         if ($add) {
                 $data = array('message' => 'Add Successfully' , 'response' => true );
                 }else {
                 $data = array('message' => 'Something Wrong' , 'response' => false );}
+
+        }
         }else {
 
             $update = DB::table('songs')->where('song_id', $id)->update($items);

@@ -574,7 +574,8 @@
         var table_setlist = $('#table_setlist').attr('hidden', false);
         $(this).attr('hidden', true);
         $('button#table-switcher1').attr('hidden', false);
-
+        
+        $('button#delete-gig-button').attr('hidden', false);
     });
 
     $(document).on('click','#table-switcher1',function (e) {
@@ -583,6 +584,7 @@
         var table_setlist = $('#table_setlist').attr('hidden', true);
         $('button#table-switcher').attr('hidden', false);
         $(this).attr('hidden', true);
+        $('button#delete-gig-button').attr('hidden', true);
 
     });
 
@@ -617,8 +619,10 @@
                 if (data.length > 0) {
                 for (var i = 5 ; i < data.length; i++) {
 
+                    var style = data[i].x == true ? 'border: 1px solid green; border-radius: 15px;' : '';
+
                     html += '<div class="timeline-list mt-2"> \
-                                            <div class="bor p-4" style="border: 1px solid green; border-radius: 15px;">\
+                                            <div class="bor p-4" style="'+style+'">\
                                             <div class="timeline-post-content" >\
                                                 <div class="user-profile">\
                                                     <img src="{{ asset("assets/music.png") }}" alt="">\
@@ -636,9 +640,77 @@
 
 
                 }
-
+                $('.number_of_gigs').text('#'+data.length);
                 $('.populate_gigs').html(html);
             }
+
+
+            
+            var gig_table = $('#gigs_table').DataTable({
+
+                     columns: [
+
+                        {
+                            data: null,
+                            render: function (data, type, row) {
+                                return '<input type="checkbox" value="'+data['gig_id']+'" name="multi-gigs" >';
+                            }
+                        },
+                        { data: 'location' },
+                        { data: 'date' },
+                              {
+                    data: null,
+                    render: function (data, type, row) {
+                        return '<button class="btn btn-primary" \
+                        data-id="'+data['gig_id']+'" \
+                        data-location="'+data['location']+'" \
+                        data-event="'+data['event']+'" \
+                        data-sets="'+data['number_of_sets']+'" \
+                        data-date="'+data['date']+'" \
+                        id="update_gig">Update</button> \
+                        ';
+                    }
+                },
+                       
+                    ],
+                    data: data,
+                    "dom": "<'dt--top-section'<'row'<'col-sm-12 col-md-6 d-flex justify-content-md-start justify-content-center'B><'col-sm-12 col-md-6 d-flex justify-content-md-end justify-content-center mt-md-0 mt-3'f>>>" +
+            "<'table-responsive'tr>" +
+            "<'dt--bottom-section d-sm-flex justify-content-sm-between text-center'<'dt--pages-count  mb-sm-0 mb-3'i><'dt--pagination'p>>",
+        buttons: {
+            buttons: [{
+                    extend: 'copy',
+                    className: 'btn'
+                },
+                {
+                    extend: 'csv',
+                    className: 'btn'
+                },
+                {
+                    extend: 'excel',
+                    className: 'btn'
+                },
+                {
+                    extend: 'print',
+                    className: 'btn'
+                }
+            ]
+        },
+        "oLanguage": {
+            "oPaginate": {
+                "sPrevious": '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-left"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>',
+                "sNext": '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-right"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>'
+            },
+            "sInfo": "Showing page _PAGE_ of _PAGES_",
+            "sSearch": '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-search"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>',
+            "sSearchPlaceholder": "Search...",
+            "sLengthMenu": "Results :  _MENU_",
+        },
+        "stripeClasses": [],
+        "lengthMenu": [7, 10, 20, 50],
+        "pageLength": 10,
+
+            })
 
 
               }
@@ -647,6 +719,52 @@
 
 
     }
+
+    $(document).on('click','#add-gig-button',function (e) {
+
+
+        $('#add_gig_modal').modal('show');
+        $('#gig_modal_title').text('Add Type');
+        $('#btn-add-gig').text('Add');
+        $('#add_gig_form')[0].reset();
+        $('#add_gig_form').find('input[name=action]').val('add');  
+        $('#add_gig_form').find('input[name=gig_id]').val('');  
+        
+
+    });
+
+
+    $(document).on('click', '#update_gig', function(){ 
+
+        $('#add_gig_modal').modal('show');
+        $('#gig_modal_title').text('Update Gig');
+        $('#btn-add-gig').text('Update');
+        $('#add_gig_form').find('input[name=action]').val('update');  
+        $('#add_gig_form').find('input[name=gig_id]').val($(this).data('id')); 
+
+        $('#add_gig_form').find('input[name=location]').val($(this).data('location')); 
+        $('#add_gig_form').find('textarea[name=event]').val($(this).data('event')); 
+        $('#add_gig_form').find('select[name=number_of_sets]').val($(this).data('sets')); 
+        $('#add_gig_form').find('input[name=date]').val($(this).data('date')); 
+        $(this).data('wedding') == 'yes' ? $( "#wedding" ).prop( "checked", true ) : $( "#wedding" ).prop( "checked", false );
+
+    })
+
+
+
+    $('#add_gig_form').on('submit', function(e){
+        e.preventDefault();
+        var data = $(this).serialize();
+        var table = '';
+        var url = '/setlist/ap-gig';
+        var form = $('#add_gig_form');
+        var action = $('#add_gig_form').find('input[name=action]').val();
+        var modal = $('#add_gig_modal');
+        add_ajax(data,table,url,action,modal,form);
+        
+        load_gigs();
+    });
+
 
 
                                         //Members

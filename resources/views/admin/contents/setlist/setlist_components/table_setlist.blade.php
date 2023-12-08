@@ -2,9 +2,10 @@
                         <div class="statbox widget box box-shadow">
                             <div class="widget-content widget-content-area">
                                 
-                                <table id="artist_song_table" class="table dt-table-hover" style="width:100%">
+                                <table id="gigs_table" class="table dt-table-hover" style="width:100%">
                                     <thead>
                                         <tr>
+                                            <th>#</th>
                                             <th>Location</th>
                                             <th>Date</th>
                                             <th>Action</th>
@@ -13,10 +14,7 @@
                                     </thead>
                                     <tbody>
                                         
-                                          <td>Tiger Nixon</td>
-                                            <td>System Architect</td>
-                                            <td>Edinburgh</td>
-                                            
+                                          
                                     </tbody>
                                 </table>
                             </div>
