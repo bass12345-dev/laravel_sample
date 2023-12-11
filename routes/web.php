@@ -23,6 +23,7 @@ Route::prefix('user')->group(function  () {
         Route::get('/songs', [App\Http\Controllers\Admin\SongsController::class, 'index']);
         Route::get('/artist', [App\Http\Controllers\Admin\ArtistController::class, 'index']);
         Route::get('/setlist', [App\Http\Controllers\Admin\SetlistController::class, 'index']);
+        Route::get('/setlist/table-view', [App\Http\Controllers\Admin\SetlistController::class, 'table_view']);
         Route::get('/singers', [App\Http\Controllers\Admin\SingerController::class, 'index']);
         Route::get('/members', [App\Http\Controllers\Admin\MemberController::class, 'index']);
         Route::get('/sipra', [App\Http\Controllers\Admin\SipraController::class, 'index']);

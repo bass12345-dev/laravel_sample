@@ -1,4 +1,4 @@
-<div class="col-xl-5 col-lg-5 col-sm-5  layout-spacing" id="table_setlist" hidden>
+<div class="col-xl-12 col-lg-12 col-sm-12  layout-spacing" id="table_setlist" >
                         <div class="statbox widget box box-shadow">
                             <div class="widget-content widget-content-area">
                                 

@@ -4,15 +4,18 @@
 
                             <div class="widget-content widget-content-area">
 
-                                <div class="button-area p-2">
+                                <div class="button-area p-2 setlist-menu"  hidden="">
                                     <button class="btn btn-primary">Auto </button>
                                    <button class="btn btn-primary">Manual</button>
                                    <button class="btn btn-primary">View</button>
                                 </div>
 
-                                 
+                        
+                        <div class="setlist-update-section">
+                            
+                        </div>        
                                
-                            <div class='parent ex-1'>
+                            <!-- <div class='parent ex-1'>
 
 
                                         <div class="row">
@@ -151,7 +154,7 @@
 
 
                                     </div>
-    
+     -->
                                
                             </div>
                         </div>

@@ -98,4 +98,14 @@ class SetlistController extends Controller
 
 
     }
+
+
+    public function table_view(){
+
+
+        $data['title'] = 'Setlist Table View';
+        return view('admin.contents.setlist.table_view.table')->with($data);
+
+
+    }
 }

@@ -30,6 +30,8 @@
      <script src=" {{ asset('assets/js/alert/alertify.js') }}"></script>
      <script src="{{ asset('assets/js/sweet.js') }}" ></script>
      <script src="{{ asset('assets/typeahead/typeahead.js') }}" ></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
     
     <script>
 
@@ -568,25 +570,25 @@
                                         //Setlist
 
 
-    $(document).on('click','#table-switcher',function (e) {
+    // $(document).on('click','#table-switcher',function (e) {
 
-        var list_setlist = $('#list_setlist').attr('hidden', true);
-        var table_setlist = $('#table_setlist').attr('hidden', false);
-        $(this).attr('hidden', true);
-        $('button#table-switcher1').attr('hidden', false);
+    //     var list_setlist = $('#list_setlist').attr('hidden', true);
+    //     var table_setlist = $('#table_setlist').attr('hidden', false);
+    //     $(this).attr('hidden', true);
+    //     $('button#table-switcher1').attr('hidden', false);
         
-        $('button#delete-gig-button').attr('hidden', false);
-    });
+    //     $('button#delete-gig-button').attr('hidden', false);
+    // });
 
-    $(document).on('click','#table-switcher1',function (e) {
+    // $(document).on('click','#table-switcher1',function (e) {
 
-        var list_setlist = $('#list_setlist').attr('hidden', false);
-        var table_setlist = $('#table_setlist').attr('hidden', true);
-        $('button#table-switcher').attr('hidden', false);
-        $(this).attr('hidden', true);
-        $('button#delete-gig-button').attr('hidden', true);
+    //     var list_setlist = $('#list_setlist').attr('hidden', false);
+    //     var table_setlist = $('#table_setlist').attr('hidden', true);
+    //     $('button#table-switcher').attr('hidden', false);
+    //     $(this).attr('hidden', true);
+    //     $('button#delete-gig-button').attr('hidden', true);
 
-    });
+    // });
 
 
 
@@ -635,6 +637,7 @@
                                                     <p class="meta-time-date">Date : '+data[i].date+' - Start Time: '+data[i].time+'</p>\
                                                     <p class="meta-time-date">Added by : '+data[i].full_name+'</p>\
                                                     <div class="">\
+                                                    <button class="btn" data-id="'+data[i].gig_id+'" id="arrange_setlist"> Arrange Setlist</button>\
                                                     </div>\
                                                 </div>\
                                             </div>\
@@ -720,6 +723,144 @@
 
             })
 
+
+    }
+
+
+
+    $(document).on('click','#arrange_setlist',function (e) {
+        var id = $(this).data('id');
+
+        load_setlist_songs(id);
+    });
+
+    function load_setlist_songs(id){
+
+
+
+        
+
+        $('.setlist-menu').attr('hidden', false);
+                    
+
+
+
+
+
+//         var html = '<div class="parent ex-1">\
+//                         <div class="row">\
+//                             <div class="col-sm-6">\
+//                                 <div class="align-self-center text-center"><h1>1<h1></div>\
+//                                     <div id="left-defaults" class="dragula">\
+//                                                     <div class="media  d-md-flex d-block p-2">\
+//                                                         <div class="media-body">\
+//                                                             <div class="d-xl-flex d-block justify-content-between">\
+//                                                                 <div class="">\
+//                                                                     <h6 class="">Need to be approved</h6>\
+//                                                                     <p class="">Kelly Young</p>\
+//                                                                 </div>\
+//                                                                 <div>\
+//                                                                     <button class="btn btn-danger btn-sm">Remove</button>\
+//                                                                 </div>\
+//                                                             </div>\
+//                                                         </div>\
+//                                                     </div>\
+//                                                     <div class="media  d-md-flex d-block p-2">\
+//                                                       \
+//                                                         <div class="media-body">\
+//                                                             <div class="d-xl-flex d-block justify-content-between">\
+//                                                                 <div class="">\
+//                                                                     <h6 class="">Meeting with client</h6>\
+//                                                                     <p class="">Andy King</p>\
+//                                                                 </div>\
+//                                                                 <div>\
+//                                                                     <button class="btn btn-danger btn-sm">Remove</button>\
+//                                                                 </div>\
+//                                                             </div>\
+//                                                         </div>\
+//                                                     </div>\
+//                                                 </div>\
+//                                             </div>\
+//                                             <div class="col-sm-6">\
+//                                                 <div class="align-self-center text-center"><h1>2<h1></div>\
+//                                                 <div id="right-defaults" class="dragula">\
+//                                                     <div class="media  d-md-flex d-block p-2">\
+//                                                        \
+//                                                         <div class="media-body">\
+//                                                             <div class="d-xl-flex d-block justify-content-between">\
+//                                                                 <div class="">\
+//                                                                     <h6 class="">Need to be approved</h6>\
+//                                                                     <p class="">Shaun Park</p>\
+//                                                                 </div>\
+//                                                                 <div>\
+//                                                                     <button class="btn btn-danger btn-sm">Remove</button>\
+//                                                                 </div>\
+//                                                             </div>\
+//                                                         </div>\
+//                                                     </div>\
+//     \
+//                                                     <div class="media  d-md-flex d-block p-2">\
+//                                                         \
+//                                                         <div class="media-body">\
+//                                                             <div class="d-xl-flex d-block justify-content-between">\
+//                                                                 <div class="">\
+//                                                                     <h6 class="">Meeting with client</h6>\
+//                                                                     <p class="">Roxanne</p>\
+//                                                                 </div>\
+//                                                                 <div>\
+//                                                                     <button class="btn btn-danger btn-sm">Remove</button>\
+//                                                                 </div>\
+//                                                             </div>\
+//                                                         </div>\
+//                                                     </div>\
+//     \
+//                                           \
+//     \
+//                                                   \
+//                                                 </div>\
+//                                             </div>\
+// \
+// \
+//                                             <div class="col-sm-6">\
+//                                                 <div class="align-self-center text-center"><h1>2<h1></div>\
+//                                                    \
+//                                                 <div id="right1-defaults" class="dragula">\
+//                                                     <div class="media  d-md-flex d-block">\
+//                                                        \
+//                                                         <div class="media-body">\
+//                                                             <div class="d-xl-flex d-block justify-content-between">\
+//                                                                 <div class="">\
+//                                                                     <h6 class="">Need to be approved</h6>\
+//                                                                     <p class="">Shaun Park</p>\
+//                                                                 </div>\
+//                                                                 <div>\
+//                                                                     <button class="btn btn-danger btn-sm">Remove</button>\
+//                                                                 </div>\
+//                                                             </div>\
+//                                                         </div>\
+//                                                     </div>\
+//     \
+//                                                     <div class="media  d-md-flex d-block">\
+//                                                         \
+//                                                         <div class="media-body">\
+//                                                             <div class="d-xl-flex d-block justify-content-between">\
+//                                                                 <div class="">\
+//                                                                     <h6 class="">Meeting with client</h6>\
+//                                                                     <p class="">Roxanne</p>\
+//                                                                 </div>\
+//                                                                 <div>\
+//                                                                     <button class="btn btn-danger btn-sm">Remove</button>\
+//                                                                 </div>\
+//                                                             </div>\
+//                                                         </div>\
+//                                                     </div>\
+//                                                 </div>\
+//                                             </div>\
+//                                         </div>\
+//                                     </div>\
+//     ';
+
+//     $('.setlist-update-section').html(html);
 
     }
 
@@ -1068,7 +1209,7 @@
         },
         "stripeClasses": [],
         "lengthMenu": [7, 10, 20, 50],
-        "pageLength": 50,
+        "pageLength": 1000,
         "ajax": {
             "url": base_url + '/songs/sipra-songs',
             "type" : 'GET',
@@ -1145,7 +1286,10 @@ $('#song_type').on('change', function() {
     var id = $('input[name=member_id]').val();
     window.open(base_url + '/user/view-songs?id='+id+'&&option='+ $('select[id=song_type]').val(), '_self');
 
-})
+});
+
+
+$('input[name="dates"]').daterangepicker();
 
 
 $(document).ready(function() {
