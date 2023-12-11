@@ -123,6 +123,9 @@ return [
 
     'cipher' => 'AES-256-CBC',
 
+
+    'position' => ['lead guitarist','singer','keyboardist','drummer','bass guitar'],
+
     /*
     |--------------------------------------------------------------------------
     | Autoloaded Service Providers

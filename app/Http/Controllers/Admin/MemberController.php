@@ -17,8 +17,85 @@ class MemberController extends Controller
     }
     public function index(){
         $data['title'] = 'Members';
+        $data['position']   = config('app.position');
 
         return view('admin.contents.members.members')->with($data);
+    }
+
+
+    public function add_member(Request $request){
+
+
+        $id = $request->input('member_id');
+        $items = array(
+            'full_name'             => $request->input('name'),
+            'position'              => $request->input('position'),
+            'type'                  => $request->input('type'), 
+            'created'               => date('Y-m-d H:i:s', time())
+        );
+
+        if (empty($id)) {
+
+            $count = DB::table('members')
+                ->where('full_name', 'like', $items['full_name'])
+                ->count();
+
+
+            
+
+        if ($count > 0) {
+
+
+            $data = array('message' => 'Artist Already Exist' , 'response' => false );
+
+            // code...
+        }else {
+
+            $add = DB::table('members')->insert($items);
+        if ($add) {
+                $data = array('message' => 'Add Successfully' , 'response' => true );
+                }else {
+                $data = array('message' => 'Something Wrong' , 'response' => false );}
+        }
+
+        
+        }else {
+
+
+
+            $update = DB::table('members')->where('member_id', $id)->update($items);
+
+            if ($update) {
+
+                $data = array('message' => 'Updated Successfully' , 'response' => true );
+
+            }else {
+
+                $data = array('message' => 'Something Wrong/No Changes Apply' , 'response' => false );
+            }
+        }
+        
+      
+        return response()->json($data);
+
+
+    }
+
+
+        public function delete_member(Request $request){
+
+        $id = $request->input('id');
+
+        if (is_array($id)) {
+                foreach ($id as $row) {
+                $delete =  MembersModel::where('member_id', $row)->delete();
+                }
+                $data = array('message' => 'Deleted Succesfully' , 'response' => true);
+            }else{
+                 $data = array('message' => 'Error' , 'response' => false );
+            }
+
+          return response()->json($data);
     }
 
 

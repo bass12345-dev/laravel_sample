@@ -179,6 +179,9 @@ class SongsController extends Controller
     }
 
 
+
+
+
         public function add_song(Request $request){
 
 
@@ -353,6 +356,71 @@ class SongsController extends Controller
 
     }
 
+
+        public function get_sipra_songs(){
+
+        $items = DB::table('songs as songs')
+                ->leftJoin('artist as artist', 'artist.artist_id', '=', 'songs.artist_id')
+                ->select('songs.song_id as song_id','songs.song_title as song_title','songs.s_type as s_type','songs.key_c as key_c',
+                         'songs.wedding_song as wedding_song', 
+                         'songs.sipra_status as sipra_status', 
+                          'songs.song_type as song_type', 
+                         'artist.artist_id as   artist_id', 'artist.artist_name as artist_name')->orderBy('songs.song_title', 'asc')->get();
+        $data = [];
+        foreach ($items as $row) {
+
+            $status = '';
+
+            if ($row->sipra_status == 'siprado') {
+                $status = '<span class="badge badge-success text-dark">Siprado</span>';
+            }else if ($row->sipra_status == 'dili_siprado') {
+                $status = '<span class="badge badge-danger text-dark">Dili Siprado</span>';
+            }else if ($row->sipra_status == 'to_review') {
+                $status = '<span class="badge badge-warning text-dark">To Review</span>';
+            }
+
+            $data[] = array(
+
+                        'song_title'    => $row->song_title,
+                        'artist_name'   => $row->artist_name,
+                        'song_id'       => $row->song_id,
+                        'status'        => $status,
+                        'stat'          => $row->sipra_status,
+                        'song_type'     => '<span class="badge badge-primary text-white">'.$row->song_type.'</span>'
+            );
+        }
+
+
+        return response()->json($data);
+
+    }
+
+
+       public function update_sipra_status(Request $request){
+
+
+        $id = $request->input('song_id');
+        $items = array('sipra_status'          => $request->input('sipra_status'));
+
+
+
+        $update = DB::table('songs')->where('song_id', $id)->update($items);
+
+            if ($update) {
+
+                $data = array('message' => 'Updated Successfully' , 'response' => true );
+
+            }else {
+
+                $data = array('message' => 'Something Wrong/No Changes Apply' , 'response' => false );
+            }
+        
+        
+      
+        return response()->json($data);
+
+
+    }
 
 
 

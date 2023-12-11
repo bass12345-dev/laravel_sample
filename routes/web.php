@@ -25,7 +25,7 @@ Route::prefix('user')->group(function  () {
         Route::get('/setlist', [App\Http\Controllers\Admin\SetlistController::class, 'index']);
         Route::get('/singers', [App\Http\Controllers\Admin\SingerController::class, 'index']);
         Route::get('/members', [App\Http\Controllers\Admin\MemberController::class, 'index']);
-
+        Route::get('/sipra', [App\Http\Controllers\Admin\SipraController::class, 'index']);
         Route::get('/view-artist-songs', [App\Http\Controllers\Admin\ArtistController::class, 'index']);
         Route::get('/view-songs', [App\Http\Controllers\Admin\SongsController::class, 'view_song']);
 }); 
@@ -75,8 +75,8 @@ Route::post('/songs/delete-artist', 'App\Http\Controllers\Admin\ArtistController
                             //Members
 Route::get('/get-members', 'App\Http\Controllers\Admin\MemberController@get_members');
 Route::get('/get-singer-members', 'App\Http\Controllers\Admin\MemberController@get_singer_members');
-
-
+Route::post('/songs/ap-member', 'App\Http\Controllers\Admin\MemberController@add_member');
+Route::post('/songs/delete-member', 'App\Http\Controllers\Admin\MemberController@delete_member');
 
                             // Sessions
 Route::get('/get-singer-sessions', 'App\Http\Controllers\Admin\MemberController@get_singer_sessions');
@@ -89,3 +89,7 @@ Route::post('/get_singer_songs', 'App\Http\Controllers\Admin\SongsController@get
                             //Gigs
 Route::get('/get-gigs', 'App\Http\Controllers\Admin\SetlistController@get_gigs');
 Route::post('setlist/ap-gig', 'App\Http\Controllers\Admin\SetlistController@add_gig');
+
+                            //Sipra
+Route::get('/songs/sipra-songs', 'App\Http\Controllers\Admin\SongsController@get_sipra_songs');
+Route::post('/songs/update-sipra-status', 'App\Http\Controllers\Admin\SongsController@update_sipra_status');

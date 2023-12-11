@@ -7,6 +7,7 @@
                                 <div class="button-area p-2">
                                     <button class="btn btn-primary">Auto </button>
                                    <button class="btn btn-primary">Manual</button>
+                                   <button class="btn btn-primary">View</button>
                                 </div>
 
                                  

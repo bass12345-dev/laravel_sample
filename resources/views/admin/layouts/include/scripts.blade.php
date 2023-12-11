@@ -25,7 +25,7 @@
 
 
     <script src=" {{ asset('assets/src/assets/js/jquery-ui.min.js') }}"></script>
-    <script src=" {{ asset('assets\src\plugins\src\contact\contacts.js') }}"></script>
+
      <script src=" {{ asset('assets/js/overly.js') }}"></script>
      <script src=" {{ asset('assets/js/alert/alertify.js') }}"></script>
      <script src="{{ asset('assets/js/sweet.js') }}" ></script>
@@ -590,6 +590,9 @@
 
 
 
+
+
+
     function load_gigs(){
 
         $.ajax({
@@ -766,8 +769,132 @@
     });
 
 
+                                        // Members
+     
+    $(document).on('click', '#btn-add-contact', function(){ 
+        $('#addContactModal').modal('show');
+        $('#member_modal_title').text('Add Type');
+        $('#btn-add-member').text('Add');
+        $('#add_member_form')[0].reset();
+        $('#add_member_form').find('input[name=action]').val('add');  
+        $('#add_member_form').find('input[name=member_id]').val('');  
+    });
 
-                                        //Members
+
+    $(document).on('click', '#update_member', function(){ 
+        $('#addContactModal').modal('show');
+        $('#member_modal_title').text('Update Member');
+        $('#btn-add-member').text('Update');
+        $('#add_member_form').find('input[name=action]').val('update');  
+        $('#add_member_form').find('input[name=member_id]').val($(this).data('id'));  
+        $('#add_member_form').find('input[name=name]').val($(this).data('name'));  
+        $('#add_member_form').find('select[name=position]').val($(this).data('position'));  
+        $('#add_member_form').find('select[name=type]').val($(this).data('type'));  
+    })
+
+    $('#add_member_form').on('submit', function(e){
+        e.preventDefault();
+        var data = $(this).serialize();
+        var table = '';
+        var url = '/songs/ap-member';
+        var form = $('#add_member_form');
+        var action = $('#add_member_form').find('input[name=action]').val();
+        var modal = $('#addContactModal');
+        add_ajax(data,table,url,action,modal,form);
+
+        load_members();
+    });
+
+     $(document).on('click','#delete-mutiple-members',function (e) {
+
+        var selectedValues = [];
+        $('input[name=multi-members]:checked').map(function() {
+                    selectedValues.push($(this).val());
+        });
+
+
+        if (selectedValues.length < 1) {
+            alert('please Select at least one');
+        }else {
+
+            var table   = '';
+            var url     = '/songs/delete-member';
+            // delete_ajax(selectedValues,url,table);
+
+            Swal.fire({
+        title: "Are you sure?",
+        text: "You wont be able to revert this!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonText: "Yes, delete it!",
+        cancelButtonText: "No, cancel!",
+        reverseButtons: true
+    }).then(function(result) {
+        if (result.value) {
+            
+                    $.ajax({
+                            type: "POST",
+                            url: base_url + url,
+                            data: {id:selectedValues},
+                            cache: false,
+                            dataType: 'json',
+                            headers: {
+                                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                              }, 
+                            beforeSend : function(){
+
+                                    Swal.fire({
+                                        title: 'Deleting',
+                                        html: 'Please wait...',
+                                        allowEscapeKey: false,
+                                        allowOutsideClick: false,
+                                        didOpen: () => {
+                                          Swal.showLoading()
+                                        }
+                                      });
+
+                            },
+                            success: function(data){
+                               if (data.response) {
+
+                                  Swal.fire(
+                                        "",
+                                        "Deleted Successfully",
+                                        "success"
+                                    );
+                                 load_members();
+                                
+                               }else {
+                                alert(data.message)
+                               }
+                                
+                            },
+
+                             error :  function(xhr){
+
+                                alert('something wrong');
+                                Swal.close()
+                                JsLoadingOverlay.hide();
+                              }
+
+                    })
+
+
+
+            // result.dismiss can be "cancel", "overlay",
+            // "close", and "timer"
+        } else if (result.dismiss === "cancel") {
+           swal.close()
+
+        }
+    });
+
+        }
+
+
+
+     });
+
 
     function load_members(){
 
@@ -814,7 +941,7 @@
                              html += '<div class="item-content mb-2" ><div class="user-profile">\
                                                 <div class="n-chk align-self-center text-center">\
                                                     <div class="form-check form-check-primary me-0 mb-0">\
-                                                        <input class="form-check-input inbox-chkbox contact-chkbox" type="checkbox">\
+                                                        <input class="form-check-input inbox-chkbox contact-chkbox" type="checkbox" value="'+data[i].member_id+'" name="multi-members">\
                                                     </div>\
                                                 </div>\
                                                 <div class="user-meta-info m-2">\
@@ -822,8 +949,12 @@
                                                     <p class="user-work" data-occupation="Web Developer">'+data[i].position+'</p>\
                                                 </div>\
                                             </div>';
-                        html += ' <div class="action-btn">\
-                                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-edit-2 edit"><path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"></path></svg>\
+                        html += ' <div class="action-btn" >\
+                                                <svg data-id="'+data[i].member_id
+                                                +'" data-name="'+data[i].full_name
+                                                +'" data-position="'+data[i].position
+                                                +'" data-type="'+data[i].type
+                                                +'"   id="update_member" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-edit-2 edit"><path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"></path></svg>\
                                             </div></div>';
 
 
@@ -853,8 +984,12 @@
                                                     <p class="user-work" data-occupation="Web Developer">'+data[i].position+'</p>\
                                                 </div>\
                                             </div>';
-                        html1 += ' <div class="action-btn">\
-                                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-edit-2 edit"><path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"></path></svg>\
+                        html1 += ' <div class="action-btn" >\
+                                                <svg data-id="'+data[i].member_id
+                                                +'" data-name="'+data[i].full_name
+                                                +'" data-position="'+data[i].position
+                                                +'" data-type="'+data[i].type
+                                                +'"   id="update_member" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-edit-2 edit"><path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"></path></svg>\
                                             </div></div>';
 
 
@@ -893,6 +1028,115 @@
 
 
     }
+
+
+                                            //Sipra
+
+    var sipra_table = $('#sipra_table').DataTable({
+
+        "dom": "<'dt--top-section'<'row'<'col-sm-12 col-md-6 d-flex justify-content-md-start justify-content-center'B><'col-sm-12 col-md-6 d-flex justify-content-md-end justify-content-center mt-md-0 mt-3'f>>>" +
+            "<'table-responsive'tr>" +
+            "<'dt--bottom-section d-sm-flex justify-content-sm-between text-center'<'dt--pages-count  mb-sm-0 mb-3'i><'dt--pagination'p>>",
+        buttons: {
+            buttons: [{
+                    extend: 'copy',
+                    className: 'btn'
+                },
+                {
+                    extend: 'csv',
+                    className: 'btn'
+                },
+                {
+                    extend: 'excel',
+                    className: 'btn'
+                },
+                {
+                    extend: 'print',
+                    className: 'btn'
+                }
+            ]
+        },
+        "oLanguage": {
+            "oPaginate": {
+                "sPrevious": '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-left"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>',
+                "sNext": '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-right"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>'
+            },
+            "sInfo": "Showing page _PAGE_ of _PAGES_",
+            "sSearch": '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-search"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>',
+            "sSearchPlaceholder": "Search...",
+            "sLengthMenu": "Results :  _MENU_",
+        },
+        "stripeClasses": [],
+        "lengthMenu": [7, 10, 20, 50],
+        "pageLength": 50,
+        "ajax": {
+            "url": base_url + '/songs/sipra-songs',
+            "type" : 'GET',
+            "dataSrc": "",
+        },
+
+        'columns': [
+
+            {
+                data: null,
+                render: function (data, type, row) {
+                    return '<input type="checkbox" value="'+data['song_id']+'" name="multi-songs" >';
+                }
+            },
+            
+             {
+                data: "song_title",
+            },
+
+             {
+                data: "artist_name",
+            },
+            {
+                data: "song_type",
+            },
+            {
+                data: "status",
+            },
+            
+            {
+                data: null,
+                render: function (data, type, row) {
+                    return '<button class="btn btn-primary" \
+                    data-id="'+data['song_id']+'" \
+                    data-status="'+data['stat']+'" \
+                    id="update_sipra_status">Update Status</button> \
+                    ';
+                }
+            },
+
+
+    ],
+
+
+    }); 
+
+
+    $(document).on('click', '#update_sipra_status', function(){ 
+
+        $('#update_status_modal').modal('show');
+        $('#update_status_form').find('select[name=sipra_status]').val($(this).data('status'));
+        $('#update_status_form').find('input[name=song_id]').val($(this).data('id'))
+
+    });
+
+
+    $('#update_status_form').on('submit', function(e){
+        e.preventDefault();
+        var data = $(this).serialize();
+        var table = sipra_table;
+        var url = '/songs/update-sipra-status';
+        var form = $('#update_status_form');
+        var action = 'update';
+        var modal = $('#update_status_modal');
+        add_ajax(data,table,url,action,modal,form);
+        
+        
+    });
 
 
 
@@ -1096,5 +1340,42 @@ $(document).ready(function() {
            })
 
     }
+
+
+
+
+   
+  
+
+  
+    $('.view-grid').on('click', function(event) {
+      event.preventDefault();
+      /* Act on the event */
+  
+      $(this).parents('.switch').find('.view-list').removeClass('active-view');
+      $(this).addClass('active-view');
+  
+      $(this).parents('.searchable-container').removeClass('list');
+      $(this).parents('.searchable-container').addClass('grid');
+  
+      $(this).parents('.searchable-container').find('.searchable-items').removeClass('list');
+      $(this).parents('.searchable-container').find('.searchable-items').addClass('grid');
+  
+    });
+  
+    $('.view-list').on('click', function(event) {
+      event.preventDefault();
+      /* Act on the event */
+      $(this).parents('.switch').find('.view-grid').removeClass('active-view');
+      $(this).addClass('active-view');
+  
+      $(this).parents('.searchable-container').removeClass('grid');
+      $(this).parents('.searchable-container').addClass('list');
+  
+      $(this).parents('.searchable-container').find('.searchable-items').removeClass('grid');
+      $(this).parents('.searchable-container').find('.searchable-items').addClass('list');
+    });
+  
+
 
     </script>
