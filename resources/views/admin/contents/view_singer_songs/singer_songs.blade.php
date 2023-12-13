@@ -20,7 +20,12 @@
     
                                 <div class="row">
                                     <div class="col-xl-4 col-lg-5 col-md-5 col-sm-7 filtered-list-search layout-spacing align-self-center">
-                                       
+                                       <select class="form-control" id="select_sipra_status" >
+                                            <option value="all_status" >Select Sipra Status</option> 
+                                            <option value="to_review" >To Review</option>      
+                                            <option value="siprado" >Siprado</option> 
+                                            <option value="dili_siprado" >Dili Siprado</option>          
+                                        </select>
                                     </div>
     
                                     <div class="col-xl-8 col-lg-7 col-md-7 col-sm-5 text-sm-right text-center layout-spacing align-self-center">
@@ -61,13 +66,28 @@
 
                                  	 			foreach ($songs as $row) {
 
+
+                                                     $status = '';
+
+                                                    if ($row->sipra_status == 'siprado') {
+                                                        $status = '<span class="badge badge-success text-dark">Siprado</span>';
+                                                    }else if ($row->sipra_status == 'dili_siprado') {
+                                                        $status = '<span class="badge badge-danger text-dark">Dili Siprado</span>';
+                                                    }else if ($row->sipra_status == 'to_review') {
+                                                        $status = '<span class="badge badge-warning text-dark">To Review</span>';
+                                                    }
+
                                  	 				echo '<div class="item-content mb-2" ><div class="user-profile">
                                                 <div class="user-meta-info m-2">
                                                     <p class="user-name" data-name="Alan Green">'.$row->song_title.'</p>
                                                     <p class="user-work" data-occupation="Web Developer">'.$row->artist_name.'</p>
                                                 </div>
 
-                                            </div><div class="action-btn"><p class="user-name" >'.$row->key_c.'</p></div>
+                                            </div><div class="action-btn"><p class="user-name" >'.$row->key_c.'</p>
+
+                                                <p class="user-name" >'.$status.'</p>
+                                            </div>
+
                         				</div>';
 
 

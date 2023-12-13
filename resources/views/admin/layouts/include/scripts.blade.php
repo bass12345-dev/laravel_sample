@@ -1103,7 +1103,7 @@
                                             </div></div>';
 
 
-                        singer_members += '<a href="'+base_url+'/user/view-songs?id='+data[i].member_id+'&&option=all"><div class="item-content mb-2 view-singer-songs" data-id="'+data[i].member_id+'"   ><div class="user-profile">\
+                        singer_members += '<a href="'+base_url+'/user/view-songs?id='+data[i].member_id+'&&option=all&&type=all_status"><div class="item-content mb-2 view-singer-songs" data-id="'+data[i].member_id+'"   ><div class="user-profile">\
                                                     <div class="user-meta-info m-2">\
                                                         <p class="user-name" data-name="Alan Green">'+data[i].full_name+'</p>\
                                                         <p class="user-work" data-occupation="Web Developer">'+data[i].position+'</p>\
@@ -1139,7 +1139,7 @@
 
 
 
-                        session_members += '<a href="'+base_url+'/user/view-songs?id='+data[i].member_id+'&&option=all"><div class="item-content mb-2 view-singer-songs" data-id="'+data[i].member_id+'"   ><div class="user-profile">\
+                        session_members += '<a href="'+base_url+'/user/view-songs?id='+data[i].member_id+'&&option=all&&type=all_status"><div class="item-content mb-2 view-singer-songs" data-id="'+data[i].member_id+'"   ><div class="user-profile">\
                                                     <div class="user-meta-info m-2">\
                                                         <p class="user-name" data-name="Alan Green">'+data[i].full_name+'</p>\
                                                         <p class="user-work" data-occupation="Web Developer">'+data[i].position+'</p>\
@@ -1291,6 +1291,15 @@ $('#song_type').on('change', function() {
     window.open(base_url + '/user/view-songs?id='+id+'&&option='+ $('select[id=song_type]').val(), '_self');
 
 });
+
+
+// $('#select_sipra_status').on('change', function() {
+
+//     var id = $('input[name=member_id]').val();
+//     window.open(base_url + '/user/view-songs?id='+id+'&&option='+ $('select[id=song_type]').val() + '&&type=' + $('select[id=select_sipra_status]').val(), '_self');
+
+// });
+
 
 
 $('input[name="dates"]').daterangepicker();

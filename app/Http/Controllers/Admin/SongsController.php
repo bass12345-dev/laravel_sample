@@ -54,7 +54,7 @@ class SongsController extends Controller
         $songs = DB::table('songs as songs')
                                      ->leftJoin('singer_songs as singer_songs', 'singer_songs.so_id', '=', 'songs.song_id')
                                      ->leftJoin('artist as artist', 'artist.artist_id', '=', 'songs.artist_id')
-                                     ->select('songs.song_id as song_id','songs.song_title as song_title','songs.s_type as s_type','songs.key_c as key_c',
+                                     ->select('songs.song_id as song_id','songs.song_title as song_title','songs.s_type as s_type','songs.key_c as key_c', 'songs.sipra_status as sipra_status',
                                              'songs.wedding_song as wedding_song', 
                                              'artist.artist_id as   artist_id', 'artist.artist_name as artist_name')->where('singer_songs.si_id',$id)->where('songs.s_type',$option)->orderBy('songs.song_title', 'asc');
 
@@ -65,7 +65,7 @@ class SongsController extends Controller
         $songs = DB::table('songs as songs')
                                      ->leftJoin('singer_songs as singer_songs', 'singer_songs.so_id', '=', 'songs.song_id')
                                      ->leftJoin('artist as artist', 'artist.artist_id', '=', 'songs.artist_id')
-                                     ->select('songs.song_id as song_id','songs.song_title as song_title','songs.s_type as s_type','songs.key_c as key_c',
+                                     ->select('songs.song_id as song_id','songs.song_title as song_title','songs.s_type as s_type','songs.key_c as key_c', 'songs.sipra_status as sipra_status',
                                              'songs.wedding_song as wedding_song', 
                                              'artist.artist_id as   artist_id', 'artist.artist_name as artist_name')->where('singer_songs.si_id',$id)->orderBy('songs.song_title', 'asc');
 
