@@ -220,6 +220,10 @@
              {
                 data: "artist_name",
             },
+
+             {
+                data: "count",
+            },
             
             {
                 data: null,

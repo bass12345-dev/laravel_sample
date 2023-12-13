@@ -13,6 +13,7 @@
                                         <tr>
                                             <th>#</th>
                                             <th>Artist Name</th>
+                                            <th>Songs</th>
                                             <th>Action</th>
                                         </tr>
                                     </thead>

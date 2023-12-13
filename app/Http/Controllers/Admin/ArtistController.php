@@ -93,11 +93,15 @@ class ArtistController extends Controller
         $data = [];
         foreach ($items as $row) {
 
+
+            $count = DB::table('songs')->where('artist_id', $row->artist_id)->count();
+
             $data[] = array(
 
 
                     'artist_name'        => $row->artist_name,
-                    'artist_id'           => $row->artist_id
+                    'artist_id'           => $row->artist_id,
+                    'count'              => $count
             );
 
         }
