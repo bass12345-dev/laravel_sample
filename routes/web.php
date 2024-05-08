@@ -78,6 +78,7 @@ Route::get('/get-members', 'App\Http\Controllers\Admin\MemberController@get_memb
 Route::get('/get-singer-members', 'App\Http\Controllers\Admin\MemberController@get_singer_members');
 Route::post('/songs/ap-member', 'App\Http\Controllers\Admin\MemberController@add_member');
 Route::post('/songs/delete-member', 'App\Http\Controllers\Admin\MemberController@delete_member');
+Route::post('/songs/delete-session', 'App\Http\Controllers\Admin\MemberController@delete_session');
 
                             // Sessions
 Route::get('/get-singer-sessions', 'App\Http\Controllers\Admin\MemberController@get_singer_sessions');

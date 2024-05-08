@@ -19,3 +19,4 @@
  @include('admin.contents.members.modals.add_update_members')             
 
 @endsection
+

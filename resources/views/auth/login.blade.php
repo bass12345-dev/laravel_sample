@@ -32,19 +32,19 @@
                         
                     <div class="auth-cover">
     
-                        <div class="position-relative mt-4">
+                        <!-- <div class="position-relative mt-4">
     
                            
                             <img src="{{asset('assets/image/hysteria.jpeg')}}" alt="auth-img" style="width:500px; border-radius: 25px;">
                             <h2 class="mt-5 text-white font-weight-bolder px-2">Welcome Hysteria</h2>
                             
-                        </div>
+                        </div> -->
                         
                     </div>
 
                 </div>
 
-                <div class="col-xxl-4 col-xl-5 col-lg-5 col-md-8 col-12 d-flex flex-column align-self-center ms-lg-auto me-lg-0 mx-auto">
+                <div class="  col-lg-5 col-md-8 col-12 d-flex flex-column align-self-center mt-5">
                     <div class="card">
                         <div class="card-body">
                             <form id="login-form">

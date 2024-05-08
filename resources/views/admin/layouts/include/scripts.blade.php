@@ -39,10 +39,6 @@
 
     var base_url = '<?php echo url('/'); ?>';
 
-
-
-
-
                                             //SONG TYPE SECTION
 
     var type_table = $('#type_table').DataTable({
@@ -950,95 +946,40 @@
         load_members();
     });
 
-     $(document).on('click','#delete-mutiple-members',function (e) {
-
-        var selectedValues = [];
-        $('input[name=multi-members]:checked').map(function() {
-                    selectedValues.push($(this).val());
-        });
 
 
+    //DELETE MEMBERS
+
+    $(document).on('click','#delete-mutiple-members',function (e) {
+        var selectedValues = []; 
+        $('input[name=multi-members]:checked').map(function() {selectedValues.push($(this).val());});
         if (selectedValues.length < 1) {
-            alert('please Select at least one');
-        }else {
-
-            var table   = '';
-            var url     = '/songs/delete-member';
-            // delete_ajax(selectedValues,url,table);
-
-            Swal.fire({
-        title: "Are you sure?",
-        text: "You wont be able to revert this!",
-        icon: "warning",
-        showCancelButton: true,
-        confirmButtonText: "Yes, delete it!",
-        cancelButtonText: "No, cancel!",
-        reverseButtons: true
-    }).then(function(result) {
-        if (result.value) {
-            
-                    $.ajax({
-                            type: "POST",
-                            url: base_url + url,
-                            data: {id:selectedValues},
-                            cache: false,
-                            dataType: 'json',
-                            headers: {
-                                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                              }, 
-                            beforeSend : function(){
-
-                                    Swal.fire({
-                                        title: 'Deleting',
-                                        html: 'Please wait...',
-                                        allowEscapeKey: false,
-                                        allowOutsideClick: false,
-                                        didOpen: () => {
-                                          Swal.showLoading()
-                                        }
-                                      });
-
-                            },
-                            success: function(data){
-                               if (data.response) {
-
-                                  Swal.fire(
-                                        "",
-                                        "Deleted Successfully",
-                                        "success"
-                                    );
-                                 load_members();
-                                
-                               }else {
-                                alert(data.message)
-                               }
-                                
-                            },
-
-                             error :  function(xhr){
-
-                                alert('something wrong');
-                                Swal.close()
-                                JsLoadingOverlay.hide();
-                              }
-
-                    })
-
-
-
-            // result.dismiss can be "cancel", "overlay",
-            // "close", and "timer"
-        } else if (result.dismiss === "cancel") {
-           swal.close()
-
+                alert('please Select at least one');
+        }else{
+            var url = '/songs/delete-member';
+            remove(selectedValues,url);
         }
     });
 
+    $(document).on('click','#delete-mutiple-sessions',function (e) {
+        var selectedValues = []; 
+        $('input[name=multi-sessions]:checked').map(function() {selectedValues.push($(this).val());});
+        if (selectedValues.length < 1) {
+                alert('please Select at least one');
+        }else{
+            var url = '/songs/delete-session';
+            remove(selectedValues,url);
         }
+    });
 
 
 
-     });
+
+
+
+
+
+
 
 
     function load_members(){
@@ -1121,7 +1062,7 @@
                             html1 += '<div class="item-content mb-2" ><div class="user-profile">\
                                                 <div class="n-chk align-self-center text-center">\
                                                     <div class="form-check form-check-primary me-0 mb-0">\
-                                                        <input class="form-check-input inbox-chkbox contact-chkbox" type="checkbox">\
+                                                        <input class="form-check-input inbox-chkbox contact-chkbox" type="checkbox"  value="'+data[i].member_id+'" name="multi-sessions">\
                                                     </div>\
                                                 </div>\
                                                 <div class="user-meta-info m-2">\
@@ -1534,5 +1475,73 @@ $(document).ready(function() {
     });
   
 
+
+
+    // FUNC
+
+const remove = (selectedValues,url) => 
+    Swal.fire({
+        title: "Are you sure?",
+        text: "You wont be able to revert this!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonText: "Yes, delete it!",
+        cancelButtonText: "No, cancel!",
+        reverseButtons: true
+    }).then(function(result) {
+        if (result.value) {
+            
+                    $.ajax({
+                            type: "POST",
+                            url: base_url + url,
+                            data: {id:selectedValues},
+                            cache: false,
+                            dataType: 'json',
+                            headers: {
+                                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                              }, 
+                            beforeSend : function(){
+
+                                    Swal.fire({
+                                        title: 'Deleting',
+                                        html: 'Please wait...',
+                                        allowEscapeKey: false,
+                                        allowOutsideClick: false,
+                                        didOpen: () => {
+                                          Swal.showLoading()
+                                        }
+                                      });
+
+                            },
+                            success: function(data){
+                               if (data.response) {
+
+                                  Swal.fire(
+                                        "",
+                                        "Deleted Successfully",
+                                        "success"
+                                    );
+                                 load_members();
+                                
+                               }else {
+                                alert(data.message)
+                               }
+                                
+                            },
+
+                             error :  function(xhr){
+
+                                alert('something wrong');
+                                Swal.close()
+                                JsLoadingOverlay.hide();
+                              }
+
+                    })
+
+           } else if (result.dismiss === "cancel") {
+           swal.close()
+
+        }
+});
 
     </script>

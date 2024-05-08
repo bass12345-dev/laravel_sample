@@ -82,7 +82,7 @@ class MemberController extends Controller
     }
 
 
-        public function delete_member(Request $request){
+    public function delete_member(Request $request){
 
         $id = $request->input('id');
 
@@ -97,6 +97,24 @@ class MemberController extends Controller
 
           return response()->json($data);
     }
+
+
+    public function delete_session(Request $request){
+
+        $id = $request->input('id');
+
+        if (is_array($id)) {
+                foreach ($id as $row) {
+                $delete =  MembersModel::where('member_id', $row)->delete();
+                }
+                $data = array('message' => 'Deleted Succesfully' , 'response' => true);
+            }else{
+                 $data = array('message' => 'Error' , 'response' => false );
+            }
+
+          return response()->json($data);
+    }
+
 
 
     public function get_members(){
